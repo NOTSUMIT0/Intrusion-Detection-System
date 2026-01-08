@@ -1,0 +1,20 @@
+{
+  "syn_flood": {
+    "description": "TCP SYN flood attack",
+    "mitre": "T1499",
+    "conditions": {
+      "tcp_flag": "S",
+      "packet_rate": 100
+    },
+    "severity": "high"
+  },
+  "port_scan": {
+    "description": "TCP port scanning activity",
+    "mitre": "T1046",
+    "conditions": {
+      "packet_size": 100,
+      "packet_rate": 50
+    },
+    "severity": "medium"
+  }
+}
