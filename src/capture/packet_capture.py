@@ -2,28 +2,62 @@ from scapy.all import sniff, IP, TCP
 import threading
 import queue
 
+from config.settings import PACKET_QUEUE_SIZE
+from utils.logger import setup_logger
+
+logger = setup_logger(
+    name="PacketCapture",
+    log_file="data/logs/ids_alerts.log"
+)
+
+
 class PacketCapture:
-  def __init__(self):
-    self.packet_queue = queue.Queue(maxsize=1000)
-    self.stop_event = threading.Event()
+    """
+    Responsible for capturing live network packets
+    and placing them into a thread-safe queue.
+    """
 
-  def _packet_callback(self, packet):
-    if IP in packet and TCP in packet:
-      try:
-        self.packet_queue.put_nowait(packet)
-      except queue.Full:
-        pass  # Drop packet if queue is full
+    def __init__(self):
+        self.packet_queue = queue.Queue(maxsize=PACKET_QUEUE_SIZE)
+        self.stop_event = threading.Event()
+        self.capture_thread = None
 
-  def start(self, interface="eth0"):
-    def run():
-      sniff(iface=interface, prn=self._packet_callback, store=False,
-            stop_filter=lambda _: self.stop_event.is_set())
-      
-    self.thread = threading.Thread(target=run, daemon=True)
-    self.thread.start()
+    def _packet_callback(self, packet):
+        """
+        Called by Scapy for every captured packet.
+        Filters and enqueues valid packets.
+        """
+        try:
+            if IP in packet and TCP in packet:
+                self.packet_queue.put_nowait(packet)
+        except queue.Full:
+            logger.warning("Packet queue full. Dropping packet.")
 
-  def stop(self):
-    self.stop_event.set()
-    self.thread.join()
+    def start(self, interface):
+        """
+        Starts packet sniffing in a separate thread.
+        """
 
+        def capture():
+            logger.info(f"Starting packet capture on interface: {interface}")
+            sniff(
+                iface=interface,
+                prn=self._packet_callback,
+                store=False,
+                stop_filter=lambda _: self.stop_event.is_set()
+            )
 
+        self.capture_thread = threading.Thread(
+            target=capture,
+            daemon=True
+        )
+        self.capture_thread.start()
+
+    def stop(self):
+        """
+        Stops packet capture gracefully.
+        """
+        logger.info("Stopping packet capture...")
+        self.stop_event.set()
+        if self.capture_thread:
+            self.capture_thread.join()
