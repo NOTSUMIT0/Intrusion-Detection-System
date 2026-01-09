@@ -1,30 +1,122 @@
-from capture.packet_capture import PacketCapture
-from analysis.traffic_analyzer import TrafficAnalyzer
-from detection.detection_engine import DetectionEngine
-from alerts.alert_system import AlertSystem
+import time
 import queue
 
-def main():
-    capture = PacketCapture()
-    analyzer = TrafficAnalyzer()
-    detector = DetectionEngine("data/signatures/signature_rules.json")
-    alert_sys = AlertSystem()
+from scapy.all import IP, TCP
 
-    capture.start("eth0")
-    print("IDS running... Press Ctrl+C to stop")
+from src.capture.packet_capture import PacketCapture
+from src.analysis.traffic_analyzer import TrafficAnalyzer
+from src.detection.detection_engine import DetectionEngine
+from src.alerts.alert_system import AlertSystem
+from src.config.settings import NETWORK_INTERFACE
+from src.utils.logger import setup_logger
 
-    try:
-        while True:
-            packet = capture.packet_queue.get(timeout=1)
-            features = analyzer.analyze(packet)
-            threats = detector.detect(features)
+logger = setup_logger(
+    name="IDS-Main",
+    log_file="data/logs/ids_alerts.log"
+)
+
+
+class IntrusionDetectionSystem:
+    """
+    Main IDS controller that connects
+    capture, analysis, detection, and alerting.
+    """
+
+    def __init__(self, mode="test"):
+        """
+        mode:
+        - 'test'  -> Windows / mock packets
+        - 'live'  -> Linux live packet capture
+        """
+        self.mode = mode
+
+        self.packet_capture = PacketCapture()
+        self.traffic_analyzer = TrafficAnalyzer()
+        self.detection_engine = DetectionEngine(
+            "data/signatures/signature_rules.json"
+        )
+        self.alert_system = AlertSystem()
+
+        logger.info(f"IDS initialized in {self.mode.upper()} mode")
+
+    # -----------------------------
+    # TEST MODE (WINDOWS SAFE)
+    # -----------------------------
+    def run_test_mode(self):
+        """
+        Runs IDS using mock packets
+        (for Windows development & testing)
+        """
+        logger.info("Running IDS in TEST mode")
+
+        test_packets = [
+            IP(src="10.0.0.1", dst="192.168.1.10") /
+            TCP(sport=1234, dport=80, flags="S"),
+
+            IP(src="10.0.0.1", dst="192.168.1.10") /
+            TCP(sport=1235, dport=80, flags="S"),
+
+            IP(src="10.0.0.1", dst="192.168.1.10") /
+            TCP(sport=1236, dport=80, flags="S"),
+        ]
+
+        start_time = time.time()
+
+        for packet in test_packets:
+            packet.time = time.time() - start_time
+
+            features = self.traffic_analyzer.analyze(packet)
+            threats = self.detection_engine.detect(features)
 
             for threat in threats:
-                alert_sys.alert(threat, features)
+                self.alert_system.generate_alert(threat, features)
 
-    except KeyboardInterrupt:
-        capture.stop()
-        print("IDS stopped")
+            time.sleep(0.5)
 
+        logger.info("TEST mode completed")
+
+    # -----------------------------
+    # LIVE MODE (LINUX ONLY)
+    # -----------------------------
+    def run_live_mode(self):
+        """
+        Runs IDS with live packet capture
+        (Linux environment)
+        """
+        logger.info("Running IDS in LIVE mode")
+
+        self.packet_capture.start(NETWORK_INTERFACE)
+
+        try:
+            while True:
+                try:
+                    packet = self.packet_capture.packet_queue.get(timeout=1)
+                    features = self.traffic_analyzer.analyze(packet)
+                    threats = self.detection_engine.detect(features)
+
+                    for threat in threats:
+                        self.alert_system.generate_alert(threat, features)
+
+                except queue.Empty:
+                    continue
+
+        except KeyboardInterrupt:
+            logger.info("Stopping IDS...")
+            self.packet_capture.stop()
+
+
+# -----------------------------
+# Program Entry Point
+# -----------------------------
 if __name__ == "__main__":
-    main()
+    """
+    Change mode here:
+    - mode="test"  -> Windows
+    - mode="live"  -> Linux
+    """
+    ids = IntrusionDetectionSystem(mode="test")
+    ids.run_test_mode()
+    
+    #FOR LIVE MODE UNCOMMENT BELOW:
+    # ids = IntrusionDetectionSystem(mode="live")
+    # ids.run_live_mode()
