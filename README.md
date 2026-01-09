@@ -184,4 +184,24 @@ Risk level
 
 Recommended mitigations
 
-### 9) 
+### 9) Tools and Technologies
+
+Python
+
+Scapy
+
+FastAPI
+
+Streamlit
+
+Streamlit Autorefresh
+
+Matplotlib
+
+Pandas
+
+Wireshark
+
+MITRE ATT&CK Framework
+
+### 10) 
