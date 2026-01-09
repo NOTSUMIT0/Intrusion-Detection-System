@@ -2,48 +2,142 @@ import json
 import numpy as np
 from sklearn.ensemble import IsolationForest
 
+from src.utils.logger import setup_logger
+from src.config.settings import ANOMALY_SCORE_THRESHOLD
+
+logger = setup_logger(
+    name="DetectionEngine",
+    log_file="data/logs/ids_alerts.log"
+)
+
+
 class DetectionEngine:
-    def __init__(self, signature_file):
-        self.rules = self._load_rules(signature_file)
-        self.model = IsolationForest(contamination=0.1, random_state=42)
-        self.trained = False
+    """
+    Performs signature-based and anomaly-based detection
+    on extracted traffic features.
+    """
 
-    def _load_rules(self, path):
-        with open(path) as f:
-            return json.load(f)
+    def __init__(self, signature_file_path: str):
+        self.signature_rules = self._load_signature_rules(signature_file_path)
 
-    def train(self, normal_data):
-        self.model.fit(normal_data)
-        self.trained = True
+        # Isolation Forest for anomaly detection
+        self.anomaly_detector = IsolationForest(
+            n_estimators=100,
+            contamination=0.1,
+            random_state=42
+        )
 
-    def detect(self, features):
-        alerts = []
+        self.is_trained = False
 
-        # Signature-based
-        for name, rule in self.rules.items():
-            cond = rule["conditions"]
-            if (
-                features["packet_rate"] > cond.get("packet_rate", 0) and
-                features["packet_size"] <= cond.get("packet_size", 9999)
-            ):
-                alerts.append({
+    # -----------------------------
+    # Signature Rule Handling
+    # -----------------------------
+    def _load_signature_rules(self, file_path):
+        """
+        Loads signature rules from a JSON file.
+        """
+        try:
+            with open(file_path, "r") as f:
+                rules = json.load(f)
+                logger.info("Signature rules loaded successfully.")
+                return rules
+        except Exception as e:
+            logger.error(f"Failed to load signature rules: {e}")
+            return {}
+
+    # -----------------------------
+    # Anomaly Model Training
+    # -----------------------------
+    def train_anomaly_model(self, normal_feature_vectors):
+        """
+        Trains the anomaly detection model
+        using normal traffic feature vectors.
+        """
+        self.anomaly_detector.fit(normal_feature_vectors)
+        self.is_trained = True
+        logger.info("Anomaly detection model trained.")
+
+    # -----------------------------
+    # Detection Logic
+    # -----------------------------
+    def detect(self, features: dict):
+        """
+        Applies both detection techniques
+        and returns a list of detected threats.
+        """
+        detected_threats = []
+
+        # 1️⃣ Signature-based detection
+        detected_threats.extend(
+            self._signature_based_detection(features)
+        )
+
+        # 2️⃣ Anomaly-based detection
+        if self.is_trained:
+            anomaly = self._anomaly_based_detection(features)
+            if anomaly:
+                detected_threats.append(anomaly)
+
+        return detected_threats
+
+    # -----------------------------
+    # Signature-based Detection
+    # -----------------------------
+    def _signature_based_detection(self, features):
+        threats = []
+
+        for rule_name, rule in self.signature_rules.items():
+            conditions = rule.get("conditions", {})
+
+            if self._match_conditions(features, conditions):
+                threat = {
                     "type": "signature",
-                    "name": name,
-                    "mitre": rule["mitre"],
-                    "severity": rule["severity"]
-                })
+                    "name": rule_name,
+                    "description": rule.get("description"),
+                    "severity": rule.get("severity"),
+                    "mitre_technique": rule.get("mitre")
+                }
+                threats.append(threat)
+                logger.warning(f"Signature match detected: {rule_name}")
 
-        # Anomaly-based
-        if self.trained:
-            vector = np.array([[features["packet_size"],
-                                features["packet_rate"],
-                                features["byte_rate"]]])
-            score = self.model.score_samples(vector)[0]
-            if score < -0.5:
-                alerts.append({
-                    "type": "anomaly",
-                    "score": score,
-                    "severity": "medium"
-                })
+        return threats
 
-        return alerts
+    def _match_conditions(self, features, conditions):
+        """
+        Checks whether traffic features match rule conditions.
+        """
+        for key, threshold in conditions.items():
+            if key not in features:
+                return False
+
+            if features[key] > threshold:
+                continue
+            else:
+                return False
+
+        return True
+
+    # -----------------------------
+    # Anomaly-based Detection
+    # -----------------------------
+    def _anomaly_based_detection(self, features):
+        """
+        Detects anomalies using Isolation Forest.
+        """
+        feature_vector = np.array([[
+            features["packet_size"],
+            features["packet_rate"],
+            features["byte_rate"]
+        ]])
+
+        score = self.anomaly_detector.score_samples(feature_vector)[0]
+
+        if score < ANOMALY_SCORE_THRESHOLD:
+            logger.warning(f"Anomaly detected (score={score})")
+            return {
+                "type": "anomaly",
+                "score": score,
+                "severity": "medium"
+            }
+
+        return None
