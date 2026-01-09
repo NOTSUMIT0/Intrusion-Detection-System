@@ -100,4 +100,21 @@ Interactive filters and charts
 
 Stable auto-refresh without UI flickering
 
-### 5) 
+### 5) System Architecture
+
+Network Traffic
+   |
+   |--> Wireshark (.pcap) [Windows]
+   |--> Live Capture (Scapy) [Linux]
+   |
+Traffic Analyzer
+   |
+Detection Engine
+   |-- Signature Rules
+   |-- Anomaly Detection
+   |
+Alert System
+   |
+FastAPI Backend
+   |
+Streamlit Dashboard
