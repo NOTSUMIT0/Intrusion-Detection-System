@@ -113,3 +113,279 @@
 2026-01-09 23:53:25,386 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T18:23:25.386830", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.0.0.1", "port": 1236}, "destination": {"ip": "192.168.1.10", "port": 80}, "traffic": {"packet_size": 40, "packet_rate": 10000.0, "byte_rate": 400000.0, "tcp_flags": "S"}}
 2026-01-09 23:53:25,388 | INFO | AlertSystem | Alert successfully sent to API
 2026-01-09 23:53:25,890 | INFO | IDS-Main | TEST mode completed
+2026-01-10 00:31:03,953 | INFO | DetectionEngine | Signature rules loaded successfully.
+2026-01-10 00:31:03,954 | INFO | AlertSystem | Alert system initialized
+2026-01-10 00:31:03,954 | INFO | IDS-Main | IDS initialized in PCAP mode
+2026-01-10 00:31:03,954 | INFO | IDS-Main | Running IDS in PCAP mode: data/pcaps/sample.pcap
+2026-01-10 00:31:03,954 | INFO | PCAPReader | Reading PCAP file: data/pcaps/sample.pcap
+2026-01-10 00:31:04,067 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:31:04,067 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:31:04,067 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:31:04,067 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.067638", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "104.18.38.9", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 54993}, "traffic": {"packet_size": 86, "packet_rate": 10000.0, "byte_rate": 860000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,097 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,097 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.097673", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "104.18.38.9", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 54993}, "traffic": {"packet_size": 86, "packet_rate": 10000.0, "byte_rate": 860000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,122 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,123 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:01:04.123030", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "104.18.38.9", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 54993}, "traffic": {"packet_size": 86, "packet_rate": 10000.0, "byte_rate": 860000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,126 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,126 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:31:04,127 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:31:04,127 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:31:04,127 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.127032", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 54993}, "destination": {"ip": "104.18.38.9", "port": 443}, "traffic": {"packet_size": 90, "packet_rate": 10000.0, "byte_rate": 900000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,130 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,130 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.130609", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 54993}, "destination": {"ip": "104.18.38.9", "port": 443}, "traffic": {"packet_size": 90, "packet_rate": 10000.0, "byte_rate": 900000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,133 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,133 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:01:04.133617", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 54993}, "destination": {"ip": "104.18.38.9", "port": 443}, "traffic": {"packet_size": 90, "packet_rate": 10000.0, "byte_rate": 900000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,137 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,137 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:31:04,138 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:31:04,138 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:31:04,138 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.138463", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "140.82.113.26", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 57030}, "traffic": {"packet_size": 80, "packet_rate": 10000.0, "byte_rate": 800000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,152 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,152 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.152631", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "140.82.113.26", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 57030}, "traffic": {"packet_size": 80, "packet_rate": 10000.0, "byte_rate": 800000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,168 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,168 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:01:04.168600", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "140.82.113.26", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 57030}, "traffic": {"packet_size": 80, "packet_rate": 10000.0, "byte_rate": 800000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,172 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,173 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:31:04,173 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:31:04,173 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:31:04,173 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.173124", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 57030}, "destination": {"ip": "140.82.113.26", "port": 443}, "traffic": {"packet_size": 84, "packet_rate": 10000.0, "byte_rate": 840000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,176 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,176 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.176684", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 57030}, "destination": {"ip": "140.82.113.26", "port": 443}, "traffic": {"packet_size": 84, "packet_rate": 10000.0, "byte_rate": 840000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,199 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,200 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:01:04.200153", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 57030}, "destination": {"ip": "140.82.113.26", "port": 443}, "traffic": {"packet_size": 84, "packet_rate": 10000.0, "byte_rate": 840000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,203 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,204 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:31:04,204 | WARNING | DetectionEngine | Signature match detected: port_scan
+2026-01-10 00:31:04,204 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:31:04,205 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:31:04,205 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.205338", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 61444}, "destination": {"ip": "91.108.56.128", "port": 443}, "traffic": {"packet_size": 335, "packet_rate": 10000.0, "byte_rate": 3350000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,208 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,209 | WARNING | AlertSystem | {"timestamp": "2026-01-09T19:01:04.209948", "alert_type": "signature", "attack_name": "port_scan", "severity": "medium", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 61444}, "destination": {"ip": "91.108.56.128", "port": 443}, "traffic": {"packet_size": 335, "packet_rate": 10000.0, "byte_rate": 3350000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,213 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,213 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.213747", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 61444}, "destination": {"ip": "91.108.56.128", "port": 443}, "traffic": {"packet_size": 335, "packet_rate": 10000.0, "byte_rate": 3350000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,230 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,230 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:01:04.230869", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 61444}, "destination": {"ip": "91.108.56.128", "port": 443}, "traffic": {"packet_size": 335, "packet_rate": 10000.0, "byte_rate": 3350000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,234 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,236 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:31:04,236 | WARNING | DetectionEngine | Signature match detected: port_scan
+2026-01-10 00:31:04,236 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:31:04,236 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:31:04,236 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.236750", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "91.108.56.128", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 61444}, "traffic": {"packet_size": 207, "packet_rate": 10000.0, "byte_rate": 2070000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,263 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,264 | WARNING | AlertSystem | {"timestamp": "2026-01-09T19:01:04.264072", "alert_type": "signature", "attack_name": "port_scan", "severity": "medium", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "91.108.56.128", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 61444}, "traffic": {"packet_size": 207, "packet_rate": 10000.0, "byte_rate": 2070000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,277 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,278 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.278982", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "91.108.56.128", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 61444}, "traffic": {"packet_size": 207, "packet_rate": 10000.0, "byte_rate": 2070000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,283 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,284 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:01:04.284157", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "91.108.56.128", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 61444}, "traffic": {"packet_size": 207, "packet_rate": 10000.0, "byte_rate": 2070000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,290 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,291 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:31:04,291 | WARNING | DetectionEngine | Signature match detected: port_scan
+2026-01-10 00:31:04,291 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:31:04,292 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:31:04,292 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.292268", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 63611}, "destination": {"ip": "155.133.224.23", "port": 27034}, "traffic": {"packet_size": 113, "packet_rate": 10000.0, "byte_rate": 1130000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,298 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,298 | WARNING | AlertSystem | {"timestamp": "2026-01-09T19:01:04.298298", "alert_type": "signature", "attack_name": "port_scan", "severity": "medium", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 63611}, "destination": {"ip": "155.133.224.23", "port": 27034}, "traffic": {"packet_size": 113, "packet_rate": 10000.0, "byte_rate": 1130000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,303 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,304 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.304820", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 63611}, "destination": {"ip": "155.133.224.23", "port": 27034}, "traffic": {"packet_size": 113, "packet_rate": 10000.0, "byte_rate": 1130000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,308 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,309 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:01:04.309426", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 63611}, "destination": {"ip": "155.133.224.23", "port": 27034}, "traffic": {"packet_size": 113, "packet_rate": 10000.0, "byte_rate": 1130000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,313 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,314 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:31:04,314 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:31:04,314 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.314436", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "155.133.224.23", "port": 27034}, "destination": {"ip": "10.234.183.252", "port": 63611}, "traffic": {"packet_size": 54, "packet_rate": 10000.0, "byte_rate": 540000.0, "tcp_flags": "A"}}
+2026-01-10 00:31:04,319 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,319 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.319994", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "155.133.224.23", "port": 27034}, "destination": {"ip": "10.234.183.252", "port": 63611}, "traffic": {"packet_size": 54, "packet_rate": 10000.0, "byte_rate": 540000.0, "tcp_flags": "A"}}
+2026-01-10 00:31:04,341 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,342 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:31:04,342 | WARNING | DetectionEngine | Signature match detected: port_scan
+2026-01-10 00:31:04,342 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:31:04,343 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:31:04,343 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.343451", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "192.200.0.116", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 49328}, "traffic": {"packet_size": 139, "packet_rate": 10000.0, "byte_rate": 1390000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,347 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,347 | WARNING | AlertSystem | {"timestamp": "2026-01-09T19:01:04.347748", "alert_type": "signature", "attack_name": "port_scan", "severity": "medium", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "192.200.0.116", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 49328}, "traffic": {"packet_size": 139, "packet_rate": 10000.0, "byte_rate": 1390000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,371 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,371 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.371203", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "192.200.0.116", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 49328}, "traffic": {"packet_size": 139, "packet_rate": 10000.0, "byte_rate": 1390000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,374 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,374 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:01:04.374408", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "192.200.0.116", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 49328}, "traffic": {"packet_size": 139, "packet_rate": 10000.0, "byte_rate": 1390000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,401 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,401 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:31:04,401 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:31:04,401 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.401988", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 49328}, "destination": {"ip": "192.200.0.116", "port": 443}, "traffic": {"packet_size": 54, "packet_rate": 10000.0, "byte_rate": 540000.0, "tcp_flags": "A"}}
+2026-01-10 00:31:04,418 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,418 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.418634", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 49328}, "destination": {"ip": "192.200.0.116", "port": 443}, "traffic": {"packet_size": 54, "packet_rate": 10000.0, "byte_rate": 540000.0, "tcp_flags": "A"}}
+2026-01-10 00:31:04,421 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,422 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:31:04,422 | WARNING | DetectionEngine | Signature match detected: port_scan
+2026-01-10 00:31:04,422 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:31:04,422 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:31:04,422 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.422446", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "162.159.135.234", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 61483}, "traffic": {"packet_size": 247, "packet_rate": 10000.0, "byte_rate": 2470000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,450 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,450 | WARNING | AlertSystem | {"timestamp": "2026-01-09T19:01:04.450473", "alert_type": "signature", "attack_name": "port_scan", "severity": "medium", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "162.159.135.234", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 61483}, "traffic": {"packet_size": 247, "packet_rate": 10000.0, "byte_rate": 2470000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,465 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,465 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.465464", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "162.159.135.234", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 61483}, "traffic": {"packet_size": 247, "packet_rate": 10000.0, "byte_rate": 2470000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,480 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,481 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:01:04.481219", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "162.159.135.234", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 61483}, "traffic": {"packet_size": 247, "packet_rate": 10000.0, "byte_rate": 2470000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,483 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,484 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:31:04,484 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:31:04,484 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.484588", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 61483}, "destination": {"ip": "162.159.135.234", "port": 443}, "traffic": {"packet_size": 54, "packet_rate": 10000.0, "byte_rate": 540000.0, "tcp_flags": "A"}}
+2026-01-10 00:31:04,487 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,488 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.488761", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 61483}, "destination": {"ip": "162.159.135.234", "port": 443}, "traffic": {"packet_size": 54, "packet_rate": 10000.0, "byte_rate": 540000.0, "tcp_flags": "A"}}
+2026-01-10 00:31:04,512 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,512 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:31:04,512 | WARNING | DetectionEngine | Signature match detected: port_scan
+2026-01-10 00:31:04,512 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:31:04,512 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:31:04,514 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.512921", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 51367}, "destination": {"ip": "162.159.128.235", "port": 2053}, "traffic": {"packet_size": 127, "packet_rate": 10000.0, "byte_rate": 1270000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,527 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,527 | WARNING | AlertSystem | {"timestamp": "2026-01-09T19:01:04.527499", "alert_type": "signature", "attack_name": "port_scan", "severity": "medium", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 51367}, "destination": {"ip": "162.159.128.235", "port": 2053}, "traffic": {"packet_size": 127, "packet_rate": 10000.0, "byte_rate": 1270000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,530 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,530 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.530456", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 51367}, "destination": {"ip": "162.159.128.235", "port": 2053}, "traffic": {"packet_size": 127, "packet_rate": 10000.0, "byte_rate": 1270000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,533 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,533 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:01:04.533806", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 51367}, "destination": {"ip": "162.159.128.235", "port": 2053}, "traffic": {"packet_size": 127, "packet_rate": 10000.0, "byte_rate": 1270000.0, "tcp_flags": "PA"}}
+2026-01-10 00:31:04,558 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,558 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:31:04,558 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:31:04,558 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.558857", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "162.159.128.235", "port": 2053}, "destination": {"ip": "10.234.183.252", "port": 51367}, "traffic": {"packet_size": 54, "packet_rate": 10000.0, "byte_rate": 540000.0, "tcp_flags": "A"}}
+2026-01-10 00:31:04,563 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,563 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:01:04.563435", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "162.159.128.235", "port": 2053}, "destination": {"ip": "10.234.183.252", "port": 51367}, "traffic": {"packet_size": 54, "packet_rate": 10000.0, "byte_rate": 540000.0, "tcp_flags": "A"}}
+2026-01-10 00:31:04,589 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:31:04,589 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:33:13,863 | INFO | DetectionEngine | Signature rules loaded successfully.
+2026-01-10 00:33:13,863 | INFO | AlertSystem | Alert system initialized
+2026-01-10 00:33:13,863 | INFO | IDS-Main | IDS initialized in PCAP mode
+2026-01-10 00:33:13,863 | INFO | IDS-Main | Running IDS in PCAP mode: data/pcaps/sample.pcap
+2026-01-10 00:33:13,863 | INFO | PCAPReader | Reading PCAP file: data/pcaps/sample.pcap
+2026-01-10 00:33:13,985 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:33:13,985 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:33:13,985 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:33:13,985 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:13.985803", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "104.18.38.9", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 54993}, "traffic": {"packet_size": 86, "packet_rate": 10000.0, "byte_rate": 860000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,017 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,017 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.017573", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "104.18.38.9", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 54993}, "traffic": {"packet_size": 86, "packet_rate": 10000.0, "byte_rate": 860000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,022 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,023 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:03:14.023743", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "104.18.38.9", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 54993}, "traffic": {"packet_size": 86, "packet_rate": 10000.0, "byte_rate": 860000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,041 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,042 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:33:14,042 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:33:14,043 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:33:14,043 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.043435", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 54993}, "destination": {"ip": "104.18.38.9", "port": 443}, "traffic": {"packet_size": 90, "packet_rate": 10000.0, "byte_rate": 900000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,047 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,047 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.047665", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 54993}, "destination": {"ip": "104.18.38.9", "port": 443}, "traffic": {"packet_size": 90, "packet_rate": 10000.0, "byte_rate": 900000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,051 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,052 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:03:14.052830", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 54993}, "destination": {"ip": "104.18.38.9", "port": 443}, "traffic": {"packet_size": 90, "packet_rate": 10000.0, "byte_rate": 900000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,070 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,072 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:33:14,072 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:33:14,072 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:33:14,072 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.072410", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "140.82.113.26", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 57030}, "traffic": {"packet_size": 80, "packet_rate": 10000.0, "byte_rate": 800000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,077 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,079 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.079224", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "140.82.113.26", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 57030}, "traffic": {"packet_size": 80, "packet_rate": 10000.0, "byte_rate": 800000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,101 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,102 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:03:14.102611", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "140.82.113.26", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 57030}, "traffic": {"packet_size": 80, "packet_rate": 10000.0, "byte_rate": 800000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,107 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,107 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:33:14,108 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:33:14,108 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:33:14,108 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.108631", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 57030}, "destination": {"ip": "140.82.113.26", "port": 443}, "traffic": {"packet_size": 84, "packet_rate": 10000.0, "byte_rate": 840000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,113 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,113 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.113691", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 57030}, "destination": {"ip": "140.82.113.26", "port": 443}, "traffic": {"packet_size": 84, "packet_rate": 10000.0, "byte_rate": 840000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,117 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,117 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:03:14.117958", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 57030}, "destination": {"ip": "140.82.113.26", "port": 443}, "traffic": {"packet_size": 84, "packet_rate": 10000.0, "byte_rate": 840000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,122 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,123 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:33:14,124 | WARNING | DetectionEngine | Signature match detected: port_scan
+2026-01-10 00:33:14,124 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:33:14,124 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:33:14,124 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.124654", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 61444}, "destination": {"ip": "91.108.56.128", "port": 443}, "traffic": {"packet_size": 335, "packet_rate": 10000.0, "byte_rate": 3350000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,147 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,148 | WARNING | AlertSystem | {"timestamp": "2026-01-09T19:03:14.148677", "alert_type": "signature", "attack_name": "port_scan", "severity": "medium", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 61444}, "destination": {"ip": "91.108.56.128", "port": 443}, "traffic": {"packet_size": 335, "packet_rate": 10000.0, "byte_rate": 3350000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,152 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,152 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.152738", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 61444}, "destination": {"ip": "91.108.56.128", "port": 443}, "traffic": {"packet_size": 335, "packet_rate": 10000.0, "byte_rate": 3350000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,177 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,177 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:03:14.177880", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 61444}, "destination": {"ip": "91.108.56.128", "port": 443}, "traffic": {"packet_size": 335, "packet_rate": 10000.0, "byte_rate": 3350000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,181 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,183 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:33:14,183 | WARNING | DetectionEngine | Signature match detected: port_scan
+2026-01-10 00:33:14,183 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:33:14,183 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:33:14,184 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.184212", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "91.108.56.128", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 61444}, "traffic": {"packet_size": 207, "packet_rate": 10000.0, "byte_rate": 2070000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,187 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,188 | WARNING | AlertSystem | {"timestamp": "2026-01-09T19:03:14.188234", "alert_type": "signature", "attack_name": "port_scan", "severity": "medium", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "91.108.56.128", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 61444}, "traffic": {"packet_size": 207, "packet_rate": 10000.0, "byte_rate": 2070000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,192 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,192 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.192261", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "91.108.56.128", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 61444}, "traffic": {"packet_size": 207, "packet_rate": 10000.0, "byte_rate": 2070000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,195 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,196 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:03:14.196742", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "91.108.56.128", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 61444}, "traffic": {"packet_size": 207, "packet_rate": 10000.0, "byte_rate": 2070000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,200 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,202 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:33:14,202 | WARNING | DetectionEngine | Signature match detected: port_scan
+2026-01-10 00:33:14,203 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:33:14,203 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:33:14,203 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.203413", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 63611}, "destination": {"ip": "155.133.224.23", "port": 27034}, "traffic": {"packet_size": 113, "packet_rate": 10000.0, "byte_rate": 1130000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,225 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,225 | WARNING | AlertSystem | {"timestamp": "2026-01-09T19:03:14.225640", "alert_type": "signature", "attack_name": "port_scan", "severity": "medium", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 63611}, "destination": {"ip": "155.133.224.23", "port": 27034}, "traffic": {"packet_size": 113, "packet_rate": 10000.0, "byte_rate": 1130000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,228 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,230 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.230187", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 63611}, "destination": {"ip": "155.133.224.23", "port": 27034}, "traffic": {"packet_size": 113, "packet_rate": 10000.0, "byte_rate": 1130000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,235 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,235 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:03:14.235744", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 63611}, "destination": {"ip": "155.133.224.23", "port": 27034}, "traffic": {"packet_size": 113, "packet_rate": 10000.0, "byte_rate": 1130000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,242 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,242 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:33:14,242 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:33:14,244 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.242777", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "155.133.224.23", "port": 27034}, "destination": {"ip": "10.234.183.252", "port": 63611}, "traffic": {"packet_size": 54, "packet_rate": 10000.0, "byte_rate": 540000.0, "tcp_flags": "A"}}
+2026-01-10 00:33:14,272 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,273 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.273749", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "155.133.224.23", "port": 27034}, "destination": {"ip": "10.234.183.252", "port": 63611}, "traffic": {"packet_size": 54, "packet_rate": 10000.0, "byte_rate": 540000.0, "tcp_flags": "A"}}
+2026-01-10 00:33:14,279 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,280 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:33:14,280 | WARNING | DetectionEngine | Signature match detected: port_scan
+2026-01-10 00:33:14,280 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:33:14,280 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:33:14,281 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.281583", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "192.200.0.116", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 49328}, "traffic": {"packet_size": 139, "packet_rate": 10000.0, "byte_rate": 1390000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,286 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,286 | WARNING | AlertSystem | {"timestamp": "2026-01-09T19:03:14.286763", "alert_type": "signature", "attack_name": "port_scan", "severity": "medium", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "192.200.0.116", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 49328}, "traffic": {"packet_size": 139, "packet_rate": 10000.0, "byte_rate": 1390000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,292 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,293 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.293609", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "192.200.0.116", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 49328}, "traffic": {"packet_size": 139, "packet_rate": 10000.0, "byte_rate": 1390000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,299 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,300 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:03:14.299513", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "192.200.0.116", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 49328}, "traffic": {"packet_size": 139, "packet_rate": 10000.0, "byte_rate": 1390000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,305 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,305 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:33:14,306 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:33:14,306 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.306644", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 49328}, "destination": {"ip": "192.200.0.116", "port": 443}, "traffic": {"packet_size": 54, "packet_rate": 10000.0, "byte_rate": 540000.0, "tcp_flags": "A"}}
+2026-01-10 00:33:14,311 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,312 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.312760", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 49328}, "destination": {"ip": "192.200.0.116", "port": 443}, "traffic": {"packet_size": 54, "packet_rate": 10000.0, "byte_rate": 540000.0, "tcp_flags": "A"}}
+2026-01-10 00:33:14,316 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,317 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:33:14,318 | WARNING | DetectionEngine | Signature match detected: port_scan
+2026-01-10 00:33:14,318 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:33:14,318 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:33:14,318 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.318393", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "162.159.135.234", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 61483}, "traffic": {"packet_size": 247, "packet_rate": 10000.0, "byte_rate": 2470000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,322 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,324 | WARNING | AlertSystem | {"timestamp": "2026-01-09T19:03:14.324050", "alert_type": "signature", "attack_name": "port_scan", "severity": "medium", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "162.159.135.234", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 61483}, "traffic": {"packet_size": 247, "packet_rate": 10000.0, "byte_rate": 2470000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,328 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,329 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.329142", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "162.159.135.234", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 61483}, "traffic": {"packet_size": 247, "packet_rate": 10000.0, "byte_rate": 2470000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,334 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,335 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:03:14.335842", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "162.159.135.234", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 61483}, "traffic": {"packet_size": 247, "packet_rate": 10000.0, "byte_rate": 2470000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,364 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,365 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:33:14,365 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:33:14,365 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.365559", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 61483}, "destination": {"ip": "162.159.135.234", "port": 443}, "traffic": {"packet_size": 54, "packet_rate": 10000.0, "byte_rate": 540000.0, "tcp_flags": "A"}}
+2026-01-10 00:33:14,372 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,372 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.372524", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 61483}, "destination": {"ip": "162.159.135.234", "port": 443}, "traffic": {"packet_size": 54, "packet_rate": 10000.0, "byte_rate": 540000.0, "tcp_flags": "A"}}
+2026-01-10 00:33:14,377 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,378 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:33:14,378 | WARNING | DetectionEngine | Signature match detected: port_scan
+2026-01-10 00:33:14,378 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:33:14,378 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
+2026-01-10 00:33:14,379 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.379628", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 51367}, "destination": {"ip": "162.159.128.235", "port": 2053}, "traffic": {"packet_size": 127, "packet_rate": 10000.0, "byte_rate": 1270000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,383 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,384 | WARNING | AlertSystem | {"timestamp": "2026-01-09T19:03:14.384844", "alert_type": "signature", "attack_name": "port_scan", "severity": "medium", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 51367}, "destination": {"ip": "162.159.128.235", "port": 2053}, "traffic": {"packet_size": 127, "packet_rate": 10000.0, "byte_rate": 1270000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,409 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,409 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.409538", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 51367}, "destination": {"ip": "162.159.128.235", "port": 2053}, "traffic": {"packet_size": 127, "packet_rate": 10000.0, "byte_rate": 1270000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,414 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,414 | INFO | AlertSystem | {"timestamp": "2026-01-09T19:03:14.414888", "alert_type": "signature", "attack_name": "suspicious_small_packets", "severity": "low", "mitre_technique": "T1046", "anomaly_score": null, "source": {"ip": "10.234.183.252", "port": 51367}, "destination": {"ip": "162.159.128.235", "port": 2053}, "traffic": {"packet_size": 127, "packet_rate": 10000.0, "byte_rate": 1270000.0, "tcp_flags": "PA"}}
+2026-01-10 00:33:14,420 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,420 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-10 00:33:14,420 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-10 00:33:14,421 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.421789", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "162.159.128.235", "port": 2053}, "destination": {"ip": "10.234.183.252", "port": 51367}, "traffic": {"packet_size": 54, "packet_rate": 10000.0, "byte_rate": 540000.0, "tcp_flags": "A"}}
+2026-01-10 00:33:14,425 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,426 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T19:03:14.426780", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "162.159.128.235", "port": 2053}, "destination": {"ip": "10.234.183.252", "port": 51367}, "traffic": {"packet_size": 54, "packet_rate": 10000.0, "byte_rate": 540000.0, "tcp_flags": "A"}}
+2026-01-10 00:33:14,429 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-10 00:33:14,431 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets

@@ -4,3 +4,6 @@ numpy
 fastapi
 uvicorn
 python-dotenv
+streamlit
+streamlit-autorefresh
+matplotlib

@@ -1,3 +1,4 @@
+from src.capture.pcap_reader import PCAPReader
 import time
 import queue
 
@@ -38,6 +39,29 @@ class IntrusionDetectionSystem:
         self.alert_system = AlertSystem()
 
         logger.info(f"IDS initialized in {self.mode.upper()} mode")
+
+
+        # -----------------------------
+    # PCAP MODE (WINDOWS FRIENDLY)
+    # -----------------------------
+    def run_pcap_mode(self, pcap_file_path):
+        """
+        Runs IDS on a PCAP file (offline analysis).
+        """
+        logger.info(f"Running IDS in PCAP mode: {pcap_file_path}")
+
+        reader = PCAPReader(pcap_file_path)
+
+        for packet in reader.read_packets():
+            features = self.traffic_analyzer.analyze(packet)
+            threats = self.detection_engine.detect(features)
+
+            for threat in threats:
+                self.alert_system.generate_alert(threat, features)
+
+        logger.info("PCAP analysis completed")
+
+
 
     # -----------------------------
     # TEST MODE (WINDOWS SAFE)
@@ -114,9 +138,15 @@ if __name__ == "__main__":
     - mode="test"  -> Windows
     - mode="live"  -> Linux
     """
-    ids = IntrusionDetectionSystem(mode="test")
-    ids.run_test_mode()
-    
+
+    # FOR PCAP MODE UNCOMMENT BELOW:
+    ids = IntrusionDetectionSystem(mode="pcap")
+    ids.run_pcap_mode("data/pcaps/sample.pcap")
+    #FOR TEST MODE UNCOMMENT BELOW:
+    # ids = IntrusionDetectionSystem(mode="test")
+    # ids.run_test_mode()
+
+
     #FOR LIVE MODE UNCOMMENT BELOW:
     # ids = IntrusionDetectionSystem(mode="live")
     # ids.run_live_mode()
