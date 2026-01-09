@@ -52,4 +52,18 @@ An Intrusion Detection System (IDS) is a security mechanism designed to monitor 
 
 - This project implements a hybrid IDS with visualization and contextual intelligence.
 
-### 2) 
+### 2) Project Overview
+
+This project is a Hybrid Intrusion Detection System with a SIEM-style dashboard, capable of analyzing real network traffic, detecting threats, mapping them to MITRE ATT&CK techniques, and visualizing alerts with actionable security intelligence.
+
+The system supports:
+
+Offline packet analysis on Windows using PCAP files
+
+Real-time live packet capture on Linux
+
+Centralized alert storage and visualization
+
+Security-focused explanations and mitigation guidance
+
+### 3) 
