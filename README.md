@@ -35,3 +35,21 @@
 16) Future Enhancements
 
 17) Conclusion
+
+----------------------------------------------------------------
+
+### 1) Introduction to Intrusion Detection Systems
+
+An Intrusion Detection System (IDS) is a security mechanism designed to monitor network or system activities for malicious actions or policy violations. IDS plays a critical role in cybersecurity by identifying potential attacks, misuse, or abnormal behavior in real time or through offline analysis.
+
+- IDS solutions are broadly classified into:
+
+- Signature-Based IDS: Detects known attack patterns.
+
+- Anomaly-Based IDS: Detects deviations from normal behavior.
+
+- Hybrid IDS: Combines both approaches for better accuracy.
+
+- This project implements a hybrid IDS with visualization and contextual intelligence.
+
+### 2) 
