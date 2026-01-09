@@ -305,26 +305,23 @@ IDS/
 
 ### 14) Benefits of the System
 
-Platform-independent design
+1. Platform-independent design
 
-Real-world traffic analysis
+2. Real-world traffic analysis
 
-Educational and practical security insights
+3. Educational and practical security insights
 
-SIEM-like visualization
+4. SIEM-like visualization
 
-Scalable and modular architecture
+5. Scalable and modular architecture
 
-Suitable for academic and real-world demonstrations
+6. Suitable for academic and real-world demonstrations
 
 ### 15) Limitations
 
 1. Offline analysis on Windows (no live sniffing)
-
 2. Limited signature set (expandable)
-
 3. No persistent database storage (currently in-memory)
-
 4. Designed for educational and research use
 
 ### 16) Future Enhancements
