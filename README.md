@@ -78,4 +78,26 @@ Present alerts through a user-friendly, SOC-style dashboard
 
 Ensure cross-platform compatibility (Windows and Linux)
 
-### 4) 
+### 4) Key Features
+
+Hybrid IDS (Signature + Anomaly Detection)
+
+PCAP-based traffic analysis (Windows compatible)
+
+Live packet capture (Linux)
+
+MITRE ATT&CK technique mapping
+
+FastAPI-based backend for alert handling
+
+Streamlit-based real-time dashboard
+
+Severity classification (High / Medium / Low)
+
+Risk summary and mitigation guidance
+
+Interactive filters and charts
+
+Stable auto-refresh without UI flickering
+
+### 5) 
