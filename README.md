@@ -329,19 +329,19 @@ Suitable for academic and real-world demonstrations
 
 ### 16) Future Enhancements
 
-Database integration (PostgreSQL / MongoDB)
+1. Database integration (PostgreSQL / MongoDB)
 
-Real-time WebSocket updates
+2. Real-time WebSocket updates
 
-Advanced ML-based behavioral analysis
+3. Advanced ML-based behavioral analysis
 
-Threat intelligence feeds
+4. Threat intelligence feeds
 
-Role-based access control
+5. Role-based access control
 
-SIEM and SOC tool integration
+6. SIEM and SOC tool integration
 
-Cloud deployment support
+7. Cloud deployment support
 
 ### 17) Conclusion
 
