@@ -154,4 +154,34 @@ Learns normal traffic behavior
 
 Flags statistically abnormal patterns
 
-### 8) 
+### 8) Dashboard Capabilities
+
+Total alerts count and API health status
+
+Risk summary based on alert severity
+
+Interactive filters:
+
+Severity
+
+Attack type
+
+Source IP
+
+Charts:
+
+Severity distribution
+
+Alerts over time
+
+MITRE ATT&CK intelligence:
+
+Technique description
+
+Impact analysis
+
+Risk level
+
+Recommended mitigations
+
+### 9) 
