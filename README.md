@@ -66,4 +66,16 @@ Centralized alert storage and visualization
 
 Security-focused explanations and mitigation guidance
 
-### 3) 
+### 3) Objectives
+
+Detect network-based attacks using signature and anomaly-based techniques
+
+Provide real-time and offline traffic analysis
+
+Map detected attacks to the MITRE ATT&CK framework
+
+Present alerts through a user-friendly, SOC-style dashboard
+
+Ensure cross-platform compatibility (Windows and Linux)
+
+### 4) 
