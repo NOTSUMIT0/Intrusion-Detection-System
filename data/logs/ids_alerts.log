@@ -1,1 +1,6 @@
 2026-01-09 21:41:05,597 | INFO | DetectionEngine | Signature rules loaded successfully.
+2026-01-09 22:20:21,849 | INFO | DetectionEngine | Signature rules loaded successfully.
+2026-01-09 22:20:21,850 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-09 22:20:21,850 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-09 22:25:29,627 | INFO | AlertSystem | Alert system initialized
+2026-01-09 22:25:29,628 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T16:55:29.628543", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.0.0.1", "port": 1234}, "destination": {"ip": "192.168.1.10", "port": 80}, "traffic": {"packet_size": 60, "packet_rate": 200, "byte_rate": 120000, "tcp_flags": "S"}}
