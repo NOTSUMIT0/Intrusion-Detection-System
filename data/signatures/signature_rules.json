@@ -1,20 +1,39 @@
 {
   "syn_flood": {
-    "description": "TCP SYN flood attack",
+    "description": "TCP SYN flood attack detected",
     "mitre": "T1499",
+    "severity": "high",
     "conditions": {
-      "tcp_flag": "S",
       "packet_rate": 100
-    },
-    "severity": "high"
+    }
   },
+
   "port_scan": {
-    "description": "TCP port scanning activity",
+    "description": "Possible TCP port scanning activity",
     "mitre": "T1046",
+    "severity": "medium",
     "conditions": {
-      "packet_size": 100,
-      "packet_rate": 50
-    },
-    "severity": "medium"
+      "packet_rate": 50,
+      "packet_size": 100
+    }
+  },
+
+  "dos_attack": {
+    "description": "High bandwidth denial of service behavior",
+    "mitre": "T1499",
+    "severity": "high",
+    "conditions": {
+      "byte_rate": 100000
+    }
+  },
+
+  "suspicious_small_packets": {
+    "description": "Suspicious traffic with unusually small packets",
+    "mitre": "T1046",
+    "severity": "low",
+    "conditions": {
+      "packet_size": 60,
+      "packet_rate": 30
+    }
   }
 }
