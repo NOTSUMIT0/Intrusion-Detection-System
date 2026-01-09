@@ -137,4 +137,21 @@ Alerts are sent to the backend API
 
 Dashboard fetches alerts periodically and visualizes them
 
-### 7) 
+### 7) Detection Techniques Used
+Signature-Based Detection
+
+SYN flood detection
+
+Port scanning detection
+
+Pattern matching based on TCP flags, packet rate, and size
+
+Anomaly-Based Detection
+
+Machine learning model (Isolation Forest)
+
+Learns normal traffic behavior
+
+Flags statistically abnormal patterns
+
+### 8) 
