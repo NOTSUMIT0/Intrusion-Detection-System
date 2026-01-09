@@ -188,36 +188,36 @@ Recommended mitigations
 
 ### 9) Tools and Technologies
 
-Python
+-> Python
 
-Scapy
+-> Scapy
 
-FastAPI
+-> FastAPI
 
-Streamlit
+-> Streamlit
 
-Streamlit Autorefresh
+-> Streamlit Autorefresh
 
-Matplotlib
+-> Matplotlib
 
-Pandas
+-> Pandas
 
-Wireshark
+-> Wireshark
 
-MITRE ATT&CK Framework
+-> MITRE ATT&CK Framework
 
 ### 10) How to Run the Project
-Prerequisites
+- Prerequisites
 
-Python 3.9+
+- Python 3.9+
 
-pip
+- pip
 
-Wireshark (for Windows)
+- Wireshark (for Windows)
 
-Npcap (installed with Wireshark)
+- Npcap (installed with Wireshark)
 
-Install dependencies:
+- Install dependencies:
 
 ```bash
 pip install -r requirements.txt
