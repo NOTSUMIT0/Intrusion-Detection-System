@@ -14,24 +14,24 @@
 
 6) Data Flow and Processing
 
-Detection Techniques Used
+7) Detection Techniques Used
 
-Dashboard Capabilities
+8) Dashboard Capabilities
 
-Tools and Technologies
+9) Tools and Technologies
 
-How to Run the Project
+10) How to Run the Project
 
-Windows (PCAP-based Analysis)
+11) Windows (PCAP-based Analysis)
 
-Linux (Live Packet Capture)
+12) Linux (Live Packet Capture)
 
-Project Structure
+13) Project Structure
 
-Benefits of the System
+14) Benefits of the System
 
-Limitations
+15) Limitations
 
-Future Enhancements
+16) Future Enhancements
 
-Conclusion
+17) Conclusion
