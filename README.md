@@ -102,6 +102,7 @@ Stable auto-refresh without UI flickering
 
 ### 5) System Architecture
 
+```css
 Network Traffic
    |
    |--> Wireshark (.pcap) [Windows]
@@ -118,6 +119,7 @@ Alert System
 FastAPI Backend
    |
 Streamlit Dashboard
+```
 
 ### 6) Data Flow and Processing
 
@@ -256,25 +258,49 @@ http://localhost:8501
 1) Install required system tools:
 
 ```bash
+sudo apt install tcpdump
 
 ```
-
+2. Run the IDS with root privileges:
 ```bash
+sudo python -m src.main
 
 ```
-
+3. Start the backend API:
 ```bash
+python -m uvicorn ui.backend.app:app --reload --app-dir src
 
 ```
-
+4. Start the dashboard:
 ```bash
+streamlit run src/ui/frontend/dashboard.py
+
+```
+- The IDS will now analyze live network traffic in real time.
+
+### 13) Project Structure
+
+```css
+IDS/
+│
+├── data/
+│   └── pcaps/
+│
+├── src/
+│   ├── analysis/
+│   ├── capture/
+│   ├── detection/
+│   ├── alerts/
+│   ├── config/
+│   ├── utils/
+│   ├── ui/
+│   │   ├── backend/
+│   │   └── frontend/
+│   └── main.py
+│
+├── requirements.txt
+└── README.md
 
 ```
 
-```bash
-
-```
-
-```bash
-
-```
+###
