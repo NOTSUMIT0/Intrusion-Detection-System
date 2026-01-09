@@ -303,4 +303,18 @@ IDS/
 
 ```
 
-###
+### 14) Benefits of the System
+
+Platform-independent design
+
+Real-world traffic analysis
+
+Educational and practical security insights
+
+SIEM-like visualization
+
+Scalable and modular architecture
+
+Suitable for academic and real-world demonstrations
+
+### 15) 
