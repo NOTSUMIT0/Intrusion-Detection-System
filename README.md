@@ -317,4 +317,32 @@ Scalable and modular architecture
 
 Suitable for academic and real-world demonstrations
 
-### 15) 
+### 15) Limitations
+
+1. Offline analysis on Windows (no live sniffing)
+
+2. Limited signature set (expandable)
+
+3. No persistent database storage (currently in-memory)
+
+4. Designed for educational and research use
+
+### 16) Future Enhancements
+
+Database integration (PostgreSQL / MongoDB)
+
+Real-time WebSocket updates
+
+Advanced ML-based behavioral analysis
+
+Threat intelligence feeds
+
+Role-based access control
+
+SIEM and SOC tool integration
+
+Cloud deployment support
+
+### 17) Conclusion
+
+This project demonstrates a complete end-to-end Intrusion Detection System combining traffic analysis, detection logic, backend APIs, and a real-time security dashboard. By integrating MITRE ATT&CK intelligence and providing actionable mitigation guidance, the system goes beyond basic alerting and offers meaningful security insights. The modular and scalable design makes it suitable for academic projects, demonstrations, and future research enhancements.
