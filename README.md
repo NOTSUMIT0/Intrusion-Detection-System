@@ -204,4 +204,21 @@ Wireshark
 
 MITRE ATT&CK Framework
 
-### 10) 
+### 10) How to Run the Project
+Prerequisites
+
+Python 3.9+
+
+pip
+
+Wireshark (for Windows)
+
+Npcap (installed with Wireshark)
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 11) 
