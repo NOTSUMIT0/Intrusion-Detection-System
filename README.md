@@ -58,47 +58,47 @@ This project is a Hybrid Intrusion Detection System with a SIEM-style dashboard,
 
 The system supports:
 
-Offline packet analysis on Windows using PCAP files
+- Offline packet analysis on Windows using PCAP files
 
-Real-time live packet capture on Linux
+- Real-time live packet capture on Linux
 
-Centralized alert storage and visualization
+- Centralized alert storage and visualization
 
-Security-focused explanations and mitigation guidance
+- Security-focused explanations and mitigation guidance
 
 ### 3) Objectives
 
-Detect network-based attacks using signature and anomaly-based techniques
+- Detect network-based attacks using signature and anomaly-based techniques
 
-Provide real-time and offline traffic analysis
+- Provide real-time and offline traffic analysis
 
-Map detected attacks to the MITRE ATT&CK framework
+- Map detected attacks to the MITRE ATT&CK framework
 
-Present alerts through a user-friendly, SOC-style dashboard
+- Present alerts through a user-friendly, SOC-style dashboard
 
-Ensure cross-platform compatibility (Windows and Linux)
+- Ensure cross-platform compatibility (Windows and Linux)
 
 ### 4) Key Features
 
-Hybrid IDS (Signature + Anomaly Detection)
+- Hybrid IDS (Signature + Anomaly Detection)
 
-PCAP-based traffic analysis (Windows compatible)
+- PCAP-based traffic analysis (Windows compatible)
 
-Live packet capture (Linux)
+- Live packet capture (Linux)
 
-MITRE ATT&CK technique mapping
+- MITRE ATT&CK technique mapping
 
-FastAPI-based backend for alert handling
+- FastAPI-based backend for alert handling
 
-Streamlit-based real-time dashboard
+- Streamlit-based real-time dashboard
 
-Severity classification (High / Medium / Low)
+- Severity classification (High / Medium / Low)
 
-Risk summary and mitigation guidance
+- Risk summary and mitigation guidance
 
-Interactive filters and charts
+- Interactive filters and charts
 
-Stable auto-refresh without UI flickering
+- Stable auto-refresh without UI flickering
 
 ### 5) System Architecture
 
@@ -123,68 +123,68 @@ Streamlit Dashboard
 
 ### 6) Data Flow and Processing
 
-Network traffic is captured (PCAP or live packets)
+1. Network traffic is captured (PCAP or live packets)
 
-Packets are parsed and converted into flow features
+2. Packets are parsed and converted into flow features
 
-Detection engine evaluates traffic using:
+3. Detection engine evaluates traffic using:
 
-Signature rules
+   - Signature rules
 
-Anomaly detection model
+   - Anomaly detection model
 
-Alerts are generated with metadata
+4. Alerts are generated with metadata
 
-Alerts are sent to the backend API
+5. Alerts are sent to the backend API
 
-Dashboard fetches alerts periodically and visualizes them
+6. Dashboard fetches alerts periodically and visualizes them
 
 ### 7) Detection Techniques Used
-Signature-Based Detection
+1. Signature-Based Detection
 
-SYN flood detection
+   - SYN flood detection
 
-Port scanning detection
+   - Port scanning detection
 
-Pattern matching based on TCP flags, packet rate, and size
+   - Pattern matching based on TCP flags, packet rate, and size
 
-Anomaly-Based Detection
+2. Anomaly-Based Detection
 
-Machine learning model (Isolation Forest)
+   - Machine learning model (Isolation Forest)
 
-Learns normal traffic behavior
+   - Learns normal traffic behavior
 
-Flags statistically abnormal patterns
+   - Flags statistically abnormal patterns
 
 ### 8) Dashboard Capabilities
 
-Total alerts count and API health status
+1. Total alerts count and API health status
 
-Risk summary based on alert severity
+2. Risk summary based on alert severity
 
-Interactive filters:
+3. Interactive filters:
 
-Severity
+   - Severity
 
-Attack type
+   - Attack type
 
-Source IP
+   - Source IP
 
-Charts:
+4. Charts:
 
-Severity distribution
+   - Severity distribution
 
-Alerts over time
+   - Alerts over time
 
-MITRE ATT&CK intelligence:
+5. MITRE ATT&CK intelligence:
 
-Technique description
+   - Technique description
 
-Impact analysis
+   - Impact analysis
 
-Risk level
+   - Risk level
 
-Recommended mitigations
+   - Recommended mitigations
 
 ### 9) Tools and Technologies
 
@@ -217,7 +217,7 @@ Recommended mitigations
 
 - Npcap (installed with Wireshark)
 
-- Install dependencies:
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
