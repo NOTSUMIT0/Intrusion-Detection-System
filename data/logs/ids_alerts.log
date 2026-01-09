@@ -21,3 +21,26 @@
 2026-01-09 22:31:48,616 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T17:01:48.616023", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.0.0.1", "port": 1236}, "destination": {"ip": "192.168.1.10", "port": 80}, "traffic": {"packet_size": 40, "packet_rate": 10000.0, "byte_rate": 400000.0, "tcp_flags": "S"}}
 2026-01-09 22:31:48,616 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T17:01:48.616023", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.0.0.1", "port": 1236}, "destination": {"ip": "192.168.1.10", "port": 80}, "traffic": {"packet_size": 40, "packet_rate": 10000.0, "byte_rate": 400000.0, "tcp_flags": "S"}}
 2026-01-09 22:31:49,117 | INFO | IDS-Main | TEST mode completed
+2026-01-09 23:20:14,474 | INFO | DetectionEngine | Signature rules loaded successfully.
+2026-01-09 23:20:14,475 | INFO | AlertSystem | Alert system initialized
+2026-01-09 23:20:14,475 | INFO | IDS-Main | IDS initialized in TEST mode
+2026-01-09 23:20:14,475 | INFO | IDS-Main | Running IDS in TEST mode
+2026-01-09 23:20:14,477 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-09 23:20:14,477 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-09 23:20:14,477 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T17:50:14.477863", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.0.0.1", "port": 1234}, "destination": {"ip": "192.168.1.10", "port": 80}, "traffic": {"packet_size": 40, "packet_rate": 10000.0, "byte_rate": 400000.0, "tcp_flags": "S"}}
+2026-01-09 23:20:14,510 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-09 23:20:14,511 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T17:50:14.511074", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.0.0.1", "port": 1234}, "destination": {"ip": "192.168.1.10", "port": 80}, "traffic": {"packet_size": 40, "packet_rate": 10000.0, "byte_rate": 400000.0, "tcp_flags": "S"}}
+2026-01-09 23:20:14,535 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-09 23:20:15,036 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-09 23:20:15,037 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-09 23:20:15,037 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T17:50:15.037688", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.0.0.1", "port": 1235}, "destination": {"ip": "192.168.1.10", "port": 80}, "traffic": {"packet_size": 40, "packet_rate": 10000.0, "byte_rate": 400000.0, "tcp_flags": "S"}}
+2026-01-09 23:20:15,049 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-09 23:20:15,050 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T17:50:15.049794", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.0.0.1", "port": 1235}, "destination": {"ip": "192.168.1.10", "port": 80}, "traffic": {"packet_size": 40, "packet_rate": 10000.0, "byte_rate": 400000.0, "tcp_flags": "S"}}
+2026-01-09 23:20:15,065 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-09 23:20:15,566 | WARNING | DetectionEngine | Signature match detected: syn_flood
+2026-01-09 23:20:15,567 | WARNING | DetectionEngine | Signature match detected: dos_attack
+2026-01-09 23:20:15,567 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T17:50:15.567724", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.0.0.1", "port": 1236}, "destination": {"ip": "192.168.1.10", "port": 80}, "traffic": {"packet_size": 40, "packet_rate": 10000.0, "byte_rate": 400000.0, "tcp_flags": "S"}}
+2026-01-09 23:20:15,592 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-09 23:20:15,592 | CRITICAL | AlertSystem | {"timestamp": "2026-01-09T17:50:15.592961", "alert_type": "signature", "attack_name": "dos_attack", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "10.0.0.1", "port": 1236}, "destination": {"ip": "192.168.1.10", "port": 80}, "traffic": {"packet_size": 40, "packet_rate": 10000.0, "byte_rate": 400000.0, "tcp_flags": "S"}}
+2026-01-09 23:20:15,596 | INFO | AlertSystem | Alert successfully sent to API
+2026-01-09 23:20:16,097 | INFO | IDS-Main | TEST mode completed

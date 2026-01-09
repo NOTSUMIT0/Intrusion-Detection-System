@@ -31,9 +31,6 @@ def root():
 
 @app.get("/alerts")
 def get_alerts():
-    """
-    Returns all detected IDS alerts
-    """
     return {
         "count": len(ALERT_STORE),
         "alerts": ALERT_STORE
@@ -42,9 +39,6 @@ def get_alerts():
 
 @app.post("/alerts")
 def add_alert(alert: dict):
-    """
-    Receives alerts from IDS core
-    """
     ALERT_STORE.append(alert)
     return {
         "message": "Alert received",
@@ -54,8 +48,5 @@ def add_alert(alert: dict):
 
 @app.delete("/alerts")
 def clear_alerts():
-    """
-    Clears all alerts (useful for testing)
-    """
     ALERT_STORE.clear()
     return {"message": "All alerts cleared"}

@@ -1,4 +1,5 @@
 import json
+import requests
 from datetime import datetime
 
 from src.utils.logger import setup_logger
@@ -12,17 +13,19 @@ logger = setup_logger(
 
 class AlertSystem:
     """
-    Handles alert generation, formatting,
-    and logging for detected threats.
+    Handles alert generation, logging,
+    and sending alerts to the FastAPI backend.
     """
 
-    def __init__(self):
+    def __init__(self, api_url="http://127.0.0.1:8000/alerts"):
+        self.api_url = api_url
         logger.info("Alert system initialized")
 
     def generate_alert(self, threat: dict, features: dict):
         """
-        Generates a structured alert object
-        and logs it.
+        Generates a structured alert and:
+        1. Logs it locally
+        2. Sends it to FastAPI backend
         """
 
         alert = {
@@ -48,16 +51,19 @@ class AlertSystem:
             }
         }
 
+        # 1️⃣ Log locally
         self._log_alert(alert)
+
+        # 2️⃣ Send to API
+        self._send_to_api(alert)
+
         return alert
 
     def _log_alert(self, alert: dict):
         """
-        Logs alerts with severity-based levels.
+        Logs alert locally with severity handling.
         """
-
         severity = alert.get("severity", "low")
-
         alert_json = json.dumps(alert)
 
         if severity == "high":
@@ -66,3 +72,19 @@ class AlertSystem:
             logger.warning(alert_json)
         else:
             logger.info(alert_json)
+
+    def _send_to_api(self, alert: dict):
+        """
+        Sends alert to FastAPI backend.
+        Fails gracefully if API is unreachable.
+        """
+        try:
+            response = requests.post(self.api_url, json=alert, timeout=2)
+            if response.status_code == 200:
+                logger.info("Alert successfully sent to API")
+            else:
+                logger.warning(
+                    f"API responded with status {response.status_code}"
+                )
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Failed to send alert to API: {e}")
