@@ -118,3 +118,23 @@ Alert System
 FastAPI Backend
    |
 Streamlit Dashboard
+
+### 6) Data Flow and Processing
+
+Network traffic is captured (PCAP or live packets)
+
+Packets are parsed and converted into flow features
+
+Detection engine evaluates traffic using:
+
+Signature rules
+
+Anomaly detection model
+
+Alerts are generated with metadata
+
+Alerts are sent to the backend API
+
+Dashboard fetches alerts periodically and visualizes them
+
+### 7) 
