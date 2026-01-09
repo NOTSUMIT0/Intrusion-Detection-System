@@ -290,4 +290,4 @@ else:
     st.info("Select a MITRE technique to view explanation and defense guidance.")
 
 st.caption("Dashboard updates every 5 seconds • Stable • SOC-style interface")
-st.caption("Created By Sumit Kumar")
+st.text("Created By Sumit Kumar")
