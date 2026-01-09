@@ -221,4 +221,60 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-### 11) 
+### 11) Running on Windows (PCAP-Based Analysis)
+
+1. Capture traffic using Wireshark
+
+2. Save the capture file as:
+
+```bash
+data/pcaps/sample.pcap
+
+```
+3. Start the backend API:
+
+```bash
+python -m uvicorn ui.backend.app:app --reload --app-dir src
+
+```
+4. Run the IDS (PCAP mode):
+```bash
+python -m src.main
+```
+5. Start the dashboard:
+```bash
+streamlit run src/ui/frontend/dashboard.py
+
+```
+6. Open Browser:
+```bash
+http://localhost:8501
+```
+
+### 12) Running on Linux (Live Packet Capture)
+
+1) Install required system tools:
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
