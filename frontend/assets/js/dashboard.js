@@ -1,4 +1,43 @@
 const API_URL = "http://127.0.0.1:8000/alerts";
+let CURRENT_ALERTS = [];
+window.currentAlerts = [];
+
+/* ---------- MITRE ATT&CK CHAIN ---------- */
+const MITRE_ATTACK_CHAIN = {
+  T1499: {
+    tactic: "Impact",
+    chain: [
+      "Reconnaissance",
+      "Initial Access",
+      "Execution",
+      "Persistence",
+      "Privilege Escalation",
+      "Defense Evasion",
+      "Command & Control",
+      "Impact"
+    ],
+    description:
+      "Denial-of-Service attack intended to disrupt availability by overwhelming resources."
+  },
+  T1046: {
+    tactic: "Reconnaissance",
+    chain: [
+      "Reconnaissance",
+      "Initial Access",
+      "Execution",
+      "Persistence",
+      "Privilege Escalation",
+      "Defense Evasion",
+      "Command & Control",
+      "Impact"
+    ],
+    description:
+      "Scanning network services to discover open ports and attack surface."
+  }
+};
+
+
+
 
 let severityChart = echarts.init(document.getElementById("severityChart"));
 let timelineChart = echarts.init(document.getElementById("timelineChart"));
@@ -37,6 +76,43 @@ const MITRE_DB = {
     ]
   }
 };
+
+/* ---------- INCIDENT GROUPING ---------- */
+function groupAlertsBySource(alerts) {
+  const incidents = {};
+
+  alerts.forEach(alert => {
+    const src = alert.source?.ip || "unknown";
+
+    if (!incidents[src]) {
+      incidents[src] = {
+        source_ip: src,
+        alerts: [],
+        highest_severity: "low",
+        first_seen: alert.timestamp,
+        last_seen: alert.timestamp
+      };
+    }
+
+    incidents[src].alerts.push(alert);
+
+    // Track severity escalation
+    if (alert.severity === "high") {
+      incidents[src].highest_severity = "high";
+    } else if (
+      alert.severity === "medium" &&
+      incidents[src].highest_severity !== "high"
+    ) {
+      incidents[src].highest_severity = "medium";
+    }
+
+    incidents[src].last_seen = alert.timestamp;
+  });
+
+  return Object.values(incidents);
+}
+
+
 /* ---------- Fetch and Render Alerts ---------- */
 
 async function loadAlerts() {
@@ -44,6 +120,14 @@ async function loadAlerts() {
     const res = await fetch(API_URL);
     const data = await res.json();
     const alerts = data.alerts || [];
+
+    alerts.forEach(a => {
+    if (!a.status) a.status = "new";
+    });
+
+    CURRENT_ALERTS = alerts;
+
+    // Update dashboard metrics
 
     document.getElementById("total").innerText = data.count;
     document.getElementById("lastUpdated").innerText =
@@ -58,6 +142,10 @@ async function loadAlerts() {
   } catch (err) {
     console.error("Failed to fetch alerts", err);
   }
+  window.currentAlerts = alerts;
+  
+
+  renderIncidents(alerts); // Update incidents on load (this is added by TAB)
 }
 
 /* ---------- Severity Counters ---------- */
@@ -157,6 +245,88 @@ function updateSourceChart(alerts) {
   });
 }
 
+/* ---------- Export Alerts as CSV ---------- */
+function exportCSV() {
+  if (!CURRENT_ALERTS.length) {
+    alert("No alerts available to export.");
+    return;
+  }
+
+  const headers = [
+    "Timestamp",
+    "Attack",
+    "Severity",
+    "MITRE",
+    "Source IP",
+    "Destination IP"
+  ];
+
+  const rows = CURRENT_ALERTS.map(a => [
+    a.timestamp,
+    a.attack_name,
+    a.severity,
+    a.mitre_technique || "",
+    a.source?.ip || "",
+    a.destination?.ip || ""
+  ]);
+
+  let csvContent =
+    headers.join(",") + "\n" +
+    rows.map(r => r.join(",")).join("\n");
+
+  const blob = new Blob([csvContent], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "ids_incident_report.csv";
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
+
+
+/* ---------- Export Alerts as PDF ---------- */
+function exportPDF() {
+  if (!CURRENT_ALERTS.length) {
+    alert("No alerts available to export.");
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.setFontSize(16);
+  doc.text("Intrusion Detection System - Incident Report", 14, 20);
+
+  doc.setFontSize(10);
+  doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 28);
+
+  let y = 38;
+
+  CURRENT_ALERTS.forEach((a, index) => {
+    if (y > 270) {
+      doc.addPage();
+      y = 20;
+    }
+
+    doc.setFontSize(11);
+    doc.text(`Alert ${index + 1}`, 14, y);
+    y += 6;
+
+    doc.setFontSize(9);
+    doc.text(`Attack: ${a.attack_name}`, 16, y); y += 5;
+    doc.text(`Severity: ${a.severity}`, 16, y); y += 5;
+    doc.text(`MITRE: ${a.mitre_technique || "N/A"}`, 16, y); y += 5;
+    doc.text(`Source: ${a.source?.ip}`, 16, y); y += 5;
+    doc.text(`Destination: ${a.destination?.ip}`, 16, y); y += 8;
+  });
+
+  doc.save("ids_incident_report.pdf");
+}
+
+
+
 /* ---------- Alerts Table ---------- */
 function renderAlertsTable(alerts) {
   const container = document.getElementById("alertsTable");
@@ -192,12 +362,21 @@ function renderAlertsTable(alerts) {
             ${alert.source?.ip} → ${alert.destination?.ip}
           </p>
         </div>
-        <span class="px-3 py-1 rounded-full text-xs font-semibold
-          ${severity === "high" ? "bg-red-500/20 text-red-400" :
-            severity === "medium" ? "bg-yellow-500/20 text-yellow-400" :
-            "bg-green-500/20 text-green-400"}">
-          ${severity.toUpperCase()}
-        </span>
+        <div class="flex gap-2 items-center">
+          <span class="px-3 py-1 rounded-full text-xs font-semibold
+            ${severity === "high" ? "bg-red-500/20 text-red-400" :
+              severity === "medium" ? "bg-yellow-500/20 text-yellow-400" :
+              "bg-green-500/20 text-green-400"}">
+            ${severity.toUpperCase()}
+          </span>
+
+          <span class="px-2 py-1 rounded text-xs font-semibold
+            ${alert.status === "new" ? "bg-blue-500/20 text-blue-400" :
+              alert.status === "investigating" ? "bg-purple-500/20 text-purple-400" :
+              "bg-green-500/20 text-green-400"}">
+            ${alert.status.toUpperCase()}
+          </span>
+        </div>
       </div>
     `;
     
@@ -210,8 +389,75 @@ function renderAlertsTable(alerts) {
   });
 }
 
+
+/* ---------- Incidents Table ---------- */
+function renderIncidents(alerts) {
+  const container = document.getElementById("incidentsTable");
+  container.innerHTML = "";
+
+  const incidents = groupAlertsBySource(alerts);
+
+  if (!incidents.length) {
+    container.innerHTML = `
+      <div class="bg-[#111827] p-4 rounded text-gray-400">
+        No active incidents detected.
+      </div>`;
+    return;
+  }
+
+  incidents.forEach(incident => {
+    const sev = incident.highest_severity;
+    const glow =
+      sev === "high" ? "glow-high" :
+      sev === "medium" ? "glow-medium" :
+      "glow-low";
+
+    const card = document.createElement("div");
+    card.className = `
+      bg-[#111827] border border-gray-800 rounded-lg p-4
+      transition hover:bg-[#1f2937] ${glow}
+    `;
+
+    card.innerHTML = `
+      <div class="flex justify-between items-center">
+        <div>
+          <p class="font-semibold text-gray-200">
+            Source IP: ${incident.source_ip}
+          </p>
+          <p class="text-sm text-gray-400">
+            Alerts: ${incident.alerts.length}
+          </p>
+        </div>
+
+        <span class="px-3 py-1 rounded-full text-xs font-semibold
+          ${sev === "high" ? "bg-red-500/20 text-red-400" :
+            sev === "medium" ? "bg-yellow-500/20 text-yellow-400" :
+            "bg-green-500/20 text-green-400"}">
+          ${sev.toUpperCase()}
+        </span>
+      </div>
+
+      <div class="text-xs text-gray-500 mt-2">
+        First seen: ${new Date(incident.first_seen).toLocaleString()}<br/>
+        Last seen: ${new Date(incident.last_seen).toLocaleString()}
+      </div>
+    `;
+
+    card.addEventListener("click", () => {
+      openIncidentModal(incident);
+    });
+
+    container.appendChild(card);
+  });
+}
+
+
+
 /// ---------- Alert Details Modal ----------
 function openModal(alert) {
+  // Reset tactic panel
+  document.getElementById("tacticPanel")?.classList.add("hidden");
+
   const modal = document.getElementById("alertModal");
   const content = document.getElementById("modalContent");
 
@@ -302,16 +548,320 @@ function openModal(alert) {
           }
         </div>
 
+                    <!-- PACKET & TRAFFIC DETAILS -->
+          <div class="border border-gray-800 rounded-lg bg-[#111827] p-4">
+            <p class="text-purple-400 font-semibold mb-2">
+              Packet & Traffic Analysis
+            </p>
+
+            ${
+              alert.traffic
+                ? `
+              <div class="grid grid-cols-2 gap-4 text-sm">
+
+                <div>
+                  <p class="text-gray-400">Source Port</p>
+                  <p class="font-mono">${alert.source?.port ?? "N/A"}</p>
+                </div>
+
+                <div>
+                  <p class="text-gray-400">Destination Port</p>
+                  <p class="font-mono">${alert.destination?.port ?? "N/A"}</p>
+                </div>
+
+                <div>
+                  <p class="text-gray-400">Packet Size</p>
+                  <p>${alert.traffic.packet_size} bytes</p>
+                </div>
+
+                <div>
+                  <p class="text-gray-400">TCP Flags</p>
+                  <p class="font-mono">${alert.traffic.tcp_flags ?? "N/A"}</p>
+                </div>
+
+                <div>
+                  <p class="text-gray-400">Packet Rate</p>
+                  <p>${alert.traffic.packet_rate?.toFixed(2)} packets/sec</p>
+                </div>
+
+                <div>
+                  <p class="text-gray-400">Byte Rate</p>
+                  <p>${alert.traffic.byte_rate?.toFixed(2)} bytes/sec</p>
+                </div>
+
+              </div>
+
+              <div class="mt-3 text-sm text-gray-400">
+                These packet-level characteristics indicate abnormal traffic behavior
+                that triggered the IDS detection logic.
+              </div>
+              `
+                : `
+              <p class="text-sm text-gray-400">
+                Packet-level details are not available for this alert.
+              </p>
+              `
+            }
+          </div>
+
+
+          <!-- ALERT LIFECYCLE ACTIONS -->
+          <div class="border border-gray-800 rounded-lg bg-[#111827] p-4">
+            <p class="text-cyan-400 font-semibold mb-2">
+              Alert Lifecycle
+            </p>
+
+            <div class="flex gap-3">
+              <button
+                class="px-3 py-2 rounded bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition"
+                onclick="setAlertStatus('${alert.timestamp}', 'investigating')">
+                Mark Investigating
+              </button>
+
+              <button
+                class="px-3 py-2 rounded bg-green-500/20 text-green-400 hover:bg-green-500/30 transition"
+                onclick="setAlertStatus('${alert.timestamp}', 'resolved')">
+                Mark Resolved
+              </button>
+            </div>
+          </div>
+
+
       </div>
     `;
 
+  
+  // Render MITRE attack chain
+  if (alert.mitre_technique) {
+    renderAttackChain(alert.mitre_technique);
+  }
 
   modal.classList.remove("hidden");
 }
 
+/* ---------- MITRE ATT&CK CHAIN RENDERING ---------- */
+function renderAttackChain(mitreId) {
+  const container = document.getElementById("attackChain");
+  const desc = document.getElementById("attackChainDesc");
+
+  container.innerHTML = "";
+  desc.innerText = "";
+
+  if (!MITRE_ATTACK_CHAIN[mitreId]) {
+    desc.innerText = "No attack chain data available.";
+    return;
+  }
+
+  const { chain, tactic, description } = MITRE_ATTACK_CHAIN[mitreId];
+
+  chain.forEach(stage => {
+    const isActive = stage === tactic;
+
+    const box = document.createElement("div");
+    box.className = `
+      px-3 py-2 rounded-lg border
+      ${isActive
+        ? "bg-red-500/20 border-red-500 text-red-400 font-semibold"
+        : "bg-[#0b1220] border-gray-700 text-gray-400"}
+    `;
+    box.innerText = stage;
+
+    box.addEventListener("click", () => {
+      showTacticDetails(stage);
+    });
+
+    container.appendChild(box);
+  });
+
+  desc.innerText = description;
+}
+
+/* ---------- MITRE TACTIC DETAILS PANEL ---------- */
+function showTacticDetails(tactic) {
+  const panel = document.getElementById("tacticPanel");
+  const content = document.getElementById("tacticContent");
+
+  content.innerHTML = "";
+
+  if (!MITRE_TACTIC_DETAILS[tactic]) {
+    content.innerHTML =
+      "<p class='text-gray-400'>No details available.</p>";
+    panel.classList.remove("hidden");
+    return;
+  }
+
+  const data = MITRE_TACTIC_DETAILS[tactic];
+
+  content.innerHTML = `
+    <div>
+      <p class="text-gray-400">Objective</p>
+      <p class="font-semibold text-gray-200">${data.goal}</p>
+    </div>
+
+    <div>
+      <p class="text-gray-400">Common Attacker Actions</p>
+      <ul class="list-disc list-inside text-gray-300">
+        ${data.actions.map(a => `<li>${a}</li>`).join("")}
+      </ul>
+    </div>
+
+    <div>
+      <p class="text-gray-400">Defensive Measures</p>
+      <ul class="list-disc list-inside text-green-400">
+        ${data.defenses.map(d => `<li>${d}</li>`).join("")}
+      </ul>
+    </div>
+  `;
+
+  panel.classList.remove("hidden");
+}
+
+
+/* ---------- MITRE TACTIC DETAILS ---------- */
+const MITRE_TACTIC_DETAILS = {
+  "Reconnaissance": {
+    goal: "Gather information about the target environment",
+    actions: [
+      "Network scanning",
+      "Service enumeration",
+      "IP range discovery"
+    ],
+    defenses: [
+      "Monitor scanning activity",
+      "Limit exposed services",
+      "Enable IDS/IPS alerts"
+    ]
+  },
+
+  "Initial Access": {
+    goal: "Gain a foothold into the target system",
+    actions: [
+      "Exploiting exposed services",
+      "Credential abuse",
+      "Phishing attacks"
+    ],
+    defenses: [
+      "Patch exposed services",
+      "Strong authentication",
+      "Access control policies"
+    ]
+  },
+
+  "Execution": {
+    goal: "Run malicious code on the target",
+    actions: [
+      "Script execution",
+      "Malware deployment",
+      "Command execution"
+    ],
+    defenses: [
+      "Application whitelisting",
+      "Behavioral monitoring",
+      "Endpoint protection"
+    ]
+  },
+
+  "Command & Control": {
+    goal: "Maintain communication with compromised systems",
+    actions: [
+      "Beaconing",
+      "C2 channels",
+      "Encrypted traffic abuse"
+    ],
+    defenses: [
+      "Traffic inspection",
+      "DNS monitoring",
+      "Outbound filtering"
+    ]
+  },
+
+  "Impact": {
+    goal: "Disrupt availability or integrity",
+    actions: [
+      "Denial of Service",
+      "Data destruction",
+      "Resource exhaustion"
+    ],
+    defenses: [
+      "Rate limiting",
+      "DDoS protection",
+      "Traffic anomaly detection"
+    ]
+  }
+};
+
+
+
+/* ---------- Incident Details Modal ---------- */
+function openIncidentModal(incident) {
+  const modal = document.getElementById("alertModal");
+  const content = document.getElementById("modalContent");
+
+  content.innerHTML = `
+    <div class="space-y-4">
+
+      <div>
+        <p class="text-gray-400">Incident Source IP</p>
+        <p class="text-lg font-semibold">${incident.source_ip}</p>
+      </div>
+
+      <div>
+        <p class="text-gray-400">Total Alerts</p>
+        <p>${incident.alerts.length}</p>
+      </div>
+
+      <div>
+        <p class="text-gray-400">Highest Severity</p>
+        <p class="font-semibold">${incident.highest_severity.toUpperCase()}</p>
+      </div>
+
+      <div class="border border-gray-800 rounded bg-[#111827] p-3">
+        <p class="text-cyan-400 font-semibold mb-2">
+          Alerts in this Incident
+        </p>
+        <ul class="list-disc list-inside text-sm text-gray-400 space-y-1">
+          ${incident.alerts.map(a => `
+            <li>
+              ${new Date(a.timestamp).toLocaleTimeString()} —
+              ${a.attack_name} (${a.severity})
+            </li>
+          `).join("")}
+        </ul>
+      </div>
+
+      <div class="text-sm text-gray-400">
+        This incident groups multiple related alerts originating from the same
+        source IP, indicating a coordinated or repeated attack attempt.
+      </div>
+
+    </div>
+  `;
+
+  modal.classList.remove("hidden");
+}
+
+
+
 function closeModal() {
   document.getElementById("alertModal").classList.add("hidden");
 }
+
+/* ---------- Set Alert Status ---------- */
+function setAlertStatus(timestamp, status) {
+  const alerts = window.currentAlerts || [];
+
+  alerts.forEach(a => {
+    if (a.timestamp === timestamp) {
+      a.status = status;
+    }
+  });
+
+  closeModal();
+  renderAlertsTable(alerts);
+  renderIncidents(alerts);
+}
+
+
 
 
 /* ---------- Live Alert Update ---------- */
@@ -353,3 +903,4 @@ document.getElementById("alertModal").addEventListener("click", (e) => {
 
 
 loadAlerts();
+renderIncidents(alerts);
