@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 
-# Temporary in-memory storage (will improve later)
 ALERT_STORE: List[dict] = []
 
 app = FastAPI(
@@ -11,10 +10,9 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Allow dashboard (frontend) to access API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # later restrict this
+    allow_origins=["*"],   # Later restrict in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -23,10 +21,7 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    return {
-        "message": "IDS Backend API is running",
-        "status": "OK"
-    }
+    return {"status": "OK", "message": "IDS Backend API running"}
 
 
 @app.get("/alerts")
@@ -40,13 +35,11 @@ def get_alerts():
 @app.post("/alerts")
 def add_alert(alert: dict):
     ALERT_STORE.append(alert)
-    return {
-        "message": "Alert received",
-        "total_alerts": len(ALERT_STORE)
-    }
+    return {"message": "Alert stored", "total": len(ALERT_STORE)}
 
 
 @app.delete("/alerts")
 def clear_alerts():
     ALERT_STORE.clear()
     return {"message": "All alerts cleared"}
+
