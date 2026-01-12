@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>IDS | MITRE ATT&CK</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="../public/output.css" rel="stylesheet">
+</head>
+
+<body class="bg-[#0b0f19] text-gray-200 min-h-screen flex">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="w-64 bg-[#111827] border-r border-gray-800 p-6">
+    <h2 class="text-xl font-bold text-cyan-400 mb-8">IDS Console</h2>
+
+    <nav class="space-y-4 text-sm">
+      <a href="dashboard.html" class="block text-gray-400 hover:text-cyan-400">Dashboard</a>
+      <a href="alerts.html" class="block text-gray-400 hover:text-cyan-400">Alerts</a>
+      <a href="analytics.html" class="block text-gray-400 hover:text-cyan-400">Analytics</a>
+      <a href="mitre.html" class="block text-cyan-400 font-semibold">MITRE ATT&CK</a>
+      <a href="about.html" class="block text-gray-400 hover:text-cyan-400">About</a>
+    </nav>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main class="flex-1 p-6 space-y-10">
+
+    <!-- Header -->
+    <header>
+      <h1 class="text-3xl font-bold text-cyan-400">MITRE ATT&CK Intelligence</h1>
+      <p class="text-gray-400 mt-1">
+        Mapping detected attacks to tactics, techniques, and adversary behavior.
+      </p>
+    </header>
+
+    <!-- ================= KILL CHAIN ================= -->
+    <section class="bg-[#111827] border border-gray-800 rounded-lg p-6">
+      <h2 class="text-lg font-semibold text-cyan-400 mb-4">
+        ATT&CK Kill Chain Overview
+      </h2>
+
+      <div id="killChain" class="grid grid-cols-8 gap-2 text-xs text-center">
+        <!-- Injected -->
+      </div>
+
+      <p id="killChainDesc" class="mt-4 text-gray-400 text-sm"></p>
+    </section>
+
+    <!-- ================= CHARTS ================= -->
+    <section class="grid grid-cols-2 gap-6">
+
+      <div class="bg-[#111827] border border-gray-800 rounded-lg p-6">
+        <h3 class="text-lg font-semibold mb-2">Technique Frequency</h3>
+        <div id="techniqueChart" class="h-80"></div>
+      </div>
+
+      <div class="bg-[#111827] border border-gray-800 rounded-lg p-6">
+        <h3 class="text-lg font-semibold mb-2">Severity by Tactic</h3>
+        <div id="tacticSeverityChart" class="h-80"></div>
+      </div>
+
+    </section>
+
+    <!-- ================= TECHNIQUE LIST ================= -->
+    <section>
+      <h2 class="text-xl font-semibold mb-4">Detected MITRE Techniques</h2>
+      <div id="techniqueList" class="grid grid-cols-2 gap-4"></div>
+    </section>
+
+  </main>
+
+  <!-- ================= MODAL ================= -->
+  <div
+    id="mitreModal"
+    class="fixed inset-0 hidden bg-black/60 backdrop-blur-sm
+           flex items-center justify-center z-50">
+
+    <div class="bg-[#0f172a] max-w-2xl w-full rounded-xl
+                border border-gray-800 p-6">
+
+      <div class="flex justify-between items-center mb-4">
+        <h3 id="modalTitle" class="text-lg font-semibold text-cyan-400"></h3>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-red-400">✕</button>
+      </div>
+
+      <div id="modalContent" class="space-y-4 text-sm text-gray-300"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <script src="../assets/js/mitre.js"></script>
+</body>
+</html>

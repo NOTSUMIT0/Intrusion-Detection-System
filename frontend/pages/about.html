@@ -1,18 +1,217 @@
-<h1 class="text-3xl text-cyan-400 font-bold">About IDS Console</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>IDS Console | About</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="../public/output.css" rel="stylesheet">
+</head>
 
-<p class="text-gray-400 mt-4">
-This Intrusion Detection System is a hybrid IDS combining
-signature-based and behavioral analysis to detect malicious
-network activity in real time.
-</p>
+<body class="bg-[#0b0f19] text-gray-200 min-h-screen flex overflow-x-hidden">
 
-<ul class="list-disc list-inside mt-4 text-gray-300">
-  <li>PCAP-based detection (Windows)</li>
-  <li>Live packet capture (Linux)</li>
-  <li>MITRE ATT&CK mapping</li>
-  <li>SIEM-style analytics dashboard</li>
-</ul>
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="w-64 bg-[#111827] border-r border-gray-800 p-6">
+    <h2 class="text-xl font-bold text-cyan-400 mb-8">IDS Console</h2>
 
-<p class="mt-6 text-gray-400">
-Created by <span class="text-cyan-400 font-semibold">Sumit Kumar</span>
-</p>
+    <nav class="space-y-4 text-sm">
+      <a href="dashboard.html" class="block text-gray-400 hover:text-cyan-400">Dashboard</a>
+      <a href="alerts.html" class="block text-gray-400 hover:text-cyan-400">Alerts</a>
+      <a href="analytics.html" class="block text-gray-400 hover:text-cyan-400">Analytics</a>
+      <a href="mitre.html" class="block text-gray-400 hover:text-cyan-400">MITRE ATT&CK</a>
+      <a href="about.html" class="block text-cyan-400 font-semibold">About</a>
+    </nav>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main class="flex-1 p-10 space-y-16">
+
+    <!-- ================= HERO ================= -->
+    <section class="text-center animate-fade-in">
+      <h1 class="text-4xl font-bold text-cyan-400 tracking-wide">
+        Intrusion Detection System Console
+      </h1>
+      <p class="text-gray-400 mt-3 max-w-3xl mx-auto">
+        A hybrid, real-time intrusion detection and security intelligence platform
+        designed to analyze network traffic, detect malicious behavior, and map
+        attacks using the MITRE ATT&CK framework.
+      </p>
+    </section>
+
+    <!-- ================= PROJECT OVERVIEW ================= -->
+    <section class="grid grid-cols-2 gap-8 animate-slide-up">
+
+      <div class="bg-[#111827] border border-gray-800 rounded-xl p-6">
+        <h2 class="text-xl font-semibold text-cyan-400 mb-3">
+          What This Application Does
+        </h2>
+        <ul class="list-disc list-inside text-gray-400 space-y-2">
+          <li>Analyzes live and PCAP-based network traffic</li>
+          <li>Detects attacks using signature & anomaly-based techniques</li>
+          <li>Generates structured alerts with severity scoring</li>
+          <li>Maps detected attacks to MITRE ATT&CK techniques</li>
+          <li>Provides real-time dashboards and incident analysis</li>
+        </ul>
+      </div>
+
+      <div class="bg-[#111827] border border-gray-800 rounded-xl p-6">
+        <h2 class="text-xl font-semibold text-cyan-400 mb-3">
+          Why IDS Console Matters
+        </h2>
+        <p class="text-gray-400 leading-relaxed">
+          Modern cyber attacks are stealthy, distributed, and fast.
+          IDS Console helps security teams identify abnormal traffic patterns,
+          understand attacker behavior, and respond quickly using
+          intelligence-driven insights rather than raw logs.
+        </p>
+      </div>
+
+    </section>
+
+    <!-- ================= ARCHITECTURE ================= -->
+    <section class="animate-slide-up">
+      <h2 class="text-2xl font-semibold text-cyan-400 mb-6">
+        System Architecture
+      </h2>
+
+      <div class="grid grid-cols-4 gap-6 text-sm">
+        <div class="bg-[#111827] border border-gray-800 rounded-lg p-4 text-center">
+          <p class="font-semibold text-cyan-400">Packet Capture</p>
+          <p class="text-gray-400 mt-2">Scapy / PCAP</p>
+        </div>
+
+        <div class="bg-[#111827] border border-gray-800 rounded-lg p-4 text-center">
+          <p class="font-semibold text-cyan-400">Detection Engine</p>
+          <p class="text-gray-400 mt-2">Rules + ML</p>
+        </div>
+
+        <div class="bg-[#111827] border border-gray-800 rounded-lg p-4 text-center">
+          <p class="font-semibold text-cyan-400">Backend API</p>
+          <p class="text-gray-400 mt-2">FastAPI + WebSockets</p>
+        </div>
+
+        <div class="bg-[#111827] border border-gray-800 rounded-lg p-4 text-center">
+          <p class="font-semibold text-cyan-400">Frontend SIEM</p>
+          <p class="text-gray-400 mt-2">HTML + Tailwind + Charts</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TECH STACK ================= -->
+    <section class="animate-slide-up">
+      <h2 class="text-2xl font-semibold text-cyan-400 mb-6">
+        Technology Stack
+      </h2>
+
+      <div class="grid grid-cols-3 gap-6">
+        <div class="bg-[#111827] p-5 rounded-lg border border-gray-800">
+          <p class="font-semibold text-cyan-400 mb-2">Backend</p>
+          <ul class="text-gray-400 space-y-1">
+            <li>Python</li>
+            <li>FastAPI</li>
+            <li>WebSockets</li>
+            <li>Scapy</li>
+          </ul>
+        </div>
+
+        <div class="bg-[#111827] p-5 rounded-lg border border-gray-800">
+          <p class="font-semibold text-cyan-400 mb-2">Frontend</p>
+          <ul class="text-gray-400 space-y-1">
+            <li>HTML5</li>
+            <li>Tailwind CSS</li>
+            <li>ECharts</li>
+            <li>JavaScript</li>
+          </ul>
+        </div>
+
+        <div class="bg-[#111827] p-5 rounded-lg border border-gray-800">
+          <p class="font-semibold text-cyan-400 mb-2">Security Intelligence</p>
+          <ul class="text-gray-400 space-y-1">
+            <li>MITRE ATT&CK</li>
+            <li>SIEM Concepts</li>
+            <li>Incident Correlation</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CREATOR ================= -->
+    <section class="animate-fade-in">
+      <h2 class="text-2xl font-semibold text-cyan-400 mb-6">
+        Created By
+      </h2>
+
+      <div class="bg-gradient-to-br from-cyan-500/10 to-purple-500/10
+                  border border-gray-800 rounded-xl p-6 flex items-center gap-6">
+
+        <div class="flex-1">
+          <h3 class="text-xl font-bold text-white">
+            Sumit Kumar
+          </h3>
+          <p class="text-gray-400 mt-1">
+            Cybersecurity & Software Development Enthusiast
+          </p>
+
+          <p class="text-gray-400 mt-4 max-w-xl">
+            Passionate about building real-world security tools, intrusion
+            detection systems, and scalable applications that combine
+            networking, system design, and threat intelligence.
+          </p>
+
+          <a
+            href="https://github.com/NOTSUMIT0"
+            target="_blank"
+            class="inline-block mt-4 px-4 py-2 rounded
+                   bg-cyan-500/20 text-cyan-400
+                   hover:bg-cyan-500/30 transition">
+            View GitHub Profile
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FUTURE SCOPE ================= -->
+    <section class="animate-slide-up">
+      <h2 class="text-2xl font-semibold text-cyan-400 mb-4">
+        Future Enhancements
+      </h2>
+
+      <ul class="list-disc list-inside text-gray-400 space-y-2">
+        <li>Machine learning–based anomaly detection</li>
+        <li>Threat intelligence feeds integration</li>
+        <li>User authentication & role-based access</li>
+        <li>Distributed deployment & cloud monitoring</li>
+        <li>Automated incident response workflows</li>
+      </ul>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="text-center text-sm text-gray-500 pt-10 border-t border-gray-800">
+      © 2026 IDS Console • Designed & Developed by Sumit Kumar
+    </footer>
+
+  </main>
+
+</body>
+
+<!-- ================= ANIMATIONS ================= -->
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+</style>
+
+</html>
