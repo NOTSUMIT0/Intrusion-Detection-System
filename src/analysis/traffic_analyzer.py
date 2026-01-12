@@ -1,6 +1,6 @@
 from collections import defaultdict
-from src.config.settings import MIN_FLOW_DURATION
-from src.utils.logger import setup_logger
+from config.settings import MIN_FLOW_DURATION
+from utils.logger import setup_logger
 
 
 logger = setup_logger(

@@ -1,15 +1,16 @@
-from src.capture.pcap_reader import PCAPReader
+from capture.pcap_reader import PCAPReader
 import time
 import queue
 
 from scapy.all import IP, TCP
 
-from src.capture.packet_capture import PacketCapture
-from src.analysis.traffic_analyzer import TrafficAnalyzer
-from src.detection.detection_engine import DetectionEngine
-from src.alerts.alert_system import AlertSystem
-from src.config.settings import NETWORK_INTERFACE
-from src.utils.logger import setup_logger
+from capture.packet_capture import PacketCapture
+from analysis.traffic_analyzer import TrafficAnalyzer
+from detection.detection_engine import DetectionEngine
+from alerts.alert_system import AlertSystem
+from config.settings import NETWORK_INTERFACE
+from utils.logger import setup_logger
+
 
 logger = setup_logger(
     name="IDS-Main",

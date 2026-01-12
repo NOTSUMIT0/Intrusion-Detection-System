@@ -2,8 +2,8 @@ import json
 import numpy as np
 from sklearn.ensemble import IsolationForest
 
-from src.utils.logger import setup_logger
-from src.config.settings import ANOMALY_SCORE_THRESHOLD
+from utils.logger import setup_logger
+from config.settings import ANOMALY_SCORE_THRESHOLD
 
 logger = setup_logger(
     name="DetectionEngine",

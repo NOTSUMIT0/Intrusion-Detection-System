@@ -2,8 +2,8 @@ from scapy.all import sniff, IP, TCP
 import threading
 import queue
 
-from src.config.settings import PACKET_QUEUE_SIZE
-from src.utils.logger import setup_logger
+from config.settings import PACKET_QUEUE_SIZE
+from utils.logger import setup_logger
 
 
 logger = setup_logger(

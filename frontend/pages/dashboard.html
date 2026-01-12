@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>IDS Dashboard</title>
+  <link href="../public/output.css" rel="stylesheet">
+</head>
+
+<body class="bg-[#0b0f19] text-gray-200 min-h-screen flex">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="w-64 bg-[#111827] border-r border-gray-800 p-6">
+    <h2 class="text-xl font-bold text-cyan-400 mb-8">
+      IDS Console
+    </h2>
+
+    <nav class="space-y-4 text-sm">
+      <a class="block text-gray-300 hover:text-cyan-400 transition">
+        Dashboard
+      </a>
+      <a class="block text-gray-400 hover:text-cyan-400 transition">
+        Alerts
+      </a>
+      <a class="block text-gray-400 hover:text-cyan-400 transition">
+        Analytics
+      </a>
+      <a class="block text-gray-400 hover:text-cyan-400 transition">
+        MITRE ATT&CK
+      </a>
+      <a class="block text-gray-400 hover:text-cyan-400 transition">
+        Settings
+      </a>
+    </nav>
+  </aside>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="flex-1 p-6 space-y-8">
+
+    <!-- Header -->
+    <header class="flex justify-between items-center">
+      <div>
+        <h1 class="text-3xl font-bold text-cyan-400">
+          Intrusion Detection System Dashboard
+        </h1>
+        <p class="text-gray-400 mt-1">
+          Real-time threat monitoring & security intelligence
+        </p>
+      </div>
+
+      <div class="text-sm text-gray-400">
+        API Status: <span class="text-green-400">Online</span>
+      </div>
+    </header>
+
+    <!-- ================= METRIC CARDS ================= -->
+    <section class="grid grid-cols-4 gap-6">
+
+      <div class="bg-[#111827] p-5 rounded-lg border border-gray-800">
+        <p class="text-gray-400 text-sm">Total Alerts</p>
+        <p id="total" class="text-4xl font-bold mt-2">0</p>
+      </div>
+
+      <div class="bg-[#111827] p-5 rounded-lg border border-gray-800">
+        <p class="text-gray-400 text-sm">High Severity</p>
+        <p id="highCount" class="text-4xl font-bold mt-2 text-red-500">0</p>
+      </div>
+
+      <div class="bg-[#111827] p-5 rounded-lg border border-gray-800">
+        <p class="text-gray-400 text-sm">Medium Severity</p>
+        <p id="mediumCount" class="text-4xl font-bold mt-2 text-yellow-400">0</p>
+      </div>
+
+      <div class="bg-[#111827] p-5 rounded-lg border border-gray-800">
+        <p class="text-gray-400 text-sm">Last Updated</p>
+        <p id="lastUpdated" class="text-xl mt-3">--:--:--</p>
+      </div>
+
+    </section>
+
+    <!-- ================= CHARTS ================= -->
+    <section class="grid grid-cols-3 gap-6">
+
+      <div class="bg-[#111827] p-4 rounded-lg border border-gray-800">
+        <h3 class="text-sm text-gray-400 mb-2">Severity Distribution</h3>
+        <div id="severityChart" class="h-64"></div>
+      </div>
+
+      <div class="bg-[#111827] p-4 rounded-lg border border-gray-800">
+        <h3 class="text-sm text-gray-400 mb-2">Alerts Over Time</h3>
+        <div id="timelineChart" class="h-64"></div>
+      </div>
+
+      <div class="bg-[#111827] p-4 rounded-lg border border-gray-800">
+        <h3 class="text-sm text-gray-400 mb-2">Top Source IPs</h3>
+        <div id="sourceChart" class="h-64"></div>
+      </div>
+
+    </section>
+
+    <!-- ================= ALERTS TABLE ================= -->
+    <section class="mt-8">
+      <h2 class="text-xl font-semibold text-gray-200 mb-4">
+        Detected Alerts
+      </h2>
+
+      <div id="alertsTable" class="space-y-3"></div>
+    </section>
+
+  </main>
+
+      <!-- ================= ALERT DRILL-DOWN MODAL ================= -->
+    <div id="alertModal"
+      class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden
+            flex items-center justify-center z-50">
+
+      <div
+        class="bg-[#0b1220] border border-gray-800 rounded-xl
+              w-[700px] max-w-full p-6 shadow-2xl
+              animate-modal">
+
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-semibold text-cyan-400">
+            Alert Details
+          </h3>
+          <button
+            onclick="closeModal()"
+            class="text-gray-400 hover:text-red-400 transition">
+            ✕
+          </button>
+        </div>
+
+        <!-- Content -->
+        <div id="modalContent" class="space-y-4 text-sm text-gray-300">
+          <!-- injected dynamically -->
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-6 text-right">
+          <button
+            onclick="closeModal()"
+            class="px-4 py-2 rounded bg-cyan-500/20
+                  text-cyan-300 hover:bg-cyan-500/30 transition">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+
+  <script src="../assets/js/dashboard.js"></script>
+</body>
+
+<style>
+  /* Modal animation */
+  @keyframes modalIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .animate-modal {
+    animation: modalIn 0.25s ease-out;
+  }
+  /* Glow effects for severity indicators */
+  .glow-high {
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+  }
+  .glow-medium {
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
+  }
+  .glow-low {
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+  }
+</style>
+
+</html>
+

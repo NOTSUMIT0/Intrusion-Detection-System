@@ -1,4 +1,4 @@
-from src.detection.detection_engine import DetectionEngine
+from detection.detection_engine import DetectionEngine
 
 engine = DetectionEngine("data/signatures/signature_rules.json")
 

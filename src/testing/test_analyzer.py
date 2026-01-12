@@ -1,5 +1,5 @@
 from scapy.all import IP, TCP
-from src.analysis.traffic_analyzer import TrafficAnalyzer
+from analysis.traffic_analyzer import TrafficAnalyzer
 
 analyzer = TrafficAnalyzer()
 

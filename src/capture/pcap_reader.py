@@ -1,5 +1,5 @@
 from scapy.all import rdpcap, IP, TCP
-from src.utils.logger import setup_logger
+from utils.logger import setup_logger
 
 logger = setup_logger(
     name="PCAPReader",

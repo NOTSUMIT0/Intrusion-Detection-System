@@ -1,4 +1,4 @@
-from src.alerts.alert_system import AlertSystem
+from alerts.alert_system import AlertSystem
 
 alert_system = AlertSystem()
 
