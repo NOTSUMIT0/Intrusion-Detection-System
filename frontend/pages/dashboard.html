@@ -239,48 +239,48 @@
   <script src="../assets/js/dashboard.js"></script>
 </body>
 
-<style>
-  /* Modal animation */
-  @keyframes modalIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px) scale(0.95);
+  <style>
+    /* Modal animation */
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
+
+    .animate-modal {
+      animation: modalIn 0.25s ease-out;
     }
-  }
+    /* Glow effects for severity indicators */
+    .glow-high {
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+    }
+    .glow-medium {
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
+    }
+    .glow-low {
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+    }
 
-  .animate-modal {
-    animation: modalIn 0.25s ease-out;
-  }
-  /* Glow effects for severity indicators */
-  .glow-high {
-    box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
-  }
-  .glow-medium {
-    box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
-  }
-  .glow-low {
-    box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
-  }
+    /* Custom scrollbar for modal content */
+    #modalContent::-webkit-scrollbar {
+      width: 6px;
+    }
 
-  /* Custom scrollbar for modal content */
-  #modalContent::-webkit-scrollbar {
-    width: 6px;
-  }
+    #modalContent::-webkit-scrollbar-thumb {
+      background-color: rgba(148, 163, 184, 0.4);
+      border-radius: 4px;
+    }
 
-  #modalContent::-webkit-scrollbar-thumb {
-    background-color: rgba(148, 163, 184, 0.4);
-    border-radius: 4px;
-  }
+    #modalContent::-webkit-scrollbar-track {
+      background: transparent;
+    }
 
-  #modalContent::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-</style>
+  </style>
 
 </html>
 

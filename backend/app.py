@@ -38,7 +38,7 @@ def get_alerts():
 async def add_alert(alert: dict):
     ALERT_STORE.append(alert)
 
-    # 🔥 PUSH ALERT TO WEBSOCKETS
+    # PUSH ALERT TO WEBSOCKETS---------------
     for ws in active_connections:
         await ws.send_json(alert)
 
