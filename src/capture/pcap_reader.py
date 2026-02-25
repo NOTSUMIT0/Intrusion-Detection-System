@@ -1,6 +1,7 @@
 from scapy.all import rdpcap, IP, TCP
 from utils.logger import setup_logger
 
+
 logger = setup_logger(
     name="PCAPReader",
     log_file="data/logs/ids_alerts.log"

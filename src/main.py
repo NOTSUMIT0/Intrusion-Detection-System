@@ -1,6 +1,7 @@
 from capture.pcap_reader import PCAPReader
 import time
 import queue
+import os
 
 from scapy.all import IP, TCP
 
@@ -10,6 +11,8 @@ from detection.detection_engine import DetectionEngine
 from alerts.alert_system import AlertSystem
 from config.settings import NETWORK_INTERFACE
 from utils.logger import setup_logger
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 logger = setup_logger(
@@ -142,7 +145,12 @@ if __name__ == "__main__":
 
     # FOR PCAP MODE UNCOMMENT BELOW:
     ids = IntrusionDetectionSystem(mode="pcap")
-    ids.run_pcap_mode("data/pcaps/sample.pcap")
+    #ids.run_pcap_mode("data/pcaps/sample.pcap")
+
+    pcap_path = os.path.join(BASE_DIR, "data", "pcaps", "sample.pcap")
+    ids.run_pcap_mode(pcap_path)
+
+
     #FOR TEST MODE UNCOMMENT BELOW:
     # ids = IntrusionDetectionSystem(mode="test")
     # ids.run_test_mode()
