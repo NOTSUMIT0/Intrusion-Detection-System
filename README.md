@@ -1,10 +1,10 @@
-# 🛡️ Intrusion Detection System (IDS) with Real-Time Dashboard
+# Intrusion Detection System (IDS) with Real-Time Dashboard
 
 > **A Hybrid Network Intrusion Detection System** with a SIEM-style, multi-page web dashboard — powered by Scapy, FastAPI, WebSockets, and ECharts.
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 1. [Introduction](#1-introduction-to-intrusion-detection-systems)
 2. [Project Overview](#2-project-overview)
@@ -52,10 +52,10 @@ This project is a **Hybrid Intrusion Detection System** with a SIEM-style, multi
 
 The system supports:
 
-- 📁 **Offline packet analysis** on Windows using PCAP files
-- 🔴 **Real-time live packet capture** on Linux (via Scapy)
-- 🧪 **Test mode** for development using mock packets
-- 🌐 **Centralized alert storage** and multi-page visualization dashboard
+-  **Offline packet analysis** on Windows using PCAP files
+-  **Real-time live packet capture** on Linux (via Scapy)
+-  **Test mode** for development using mock packets
+-  **Centralized alert storage** and multi-page visualization dashboard
 
 ---
 
@@ -74,18 +74,18 @@ The system supports:
 
 | Feature | Description |
 |---|---|
-| 🔍 Hybrid IDS | Signature + Anomaly (Isolation Forest) detection |
-| 📁 PCAP Analysis | Offline packet analysis — Windows compatible |
-| 🔴 Live Capture | Real-time sniffing via Scapy — Linux |
-| 🧪 Test Mode | Mock packet injection for development |
-| 🗺️ MITRE ATT&CK | Full tactic/technique mapping with kill chain view |
-| ⚡ WebSocket Alerts | Push-based real-time alert delivery |
-| 📊 ECharts Visuals | Interactive charts (severity, timeline, top IPs, attack types) |
-| 📤 Export Reports | Export alerts to **CSV** and **PDF** (jsPDF) |
-| 📋 Alert Details Modal | Expandable per-alert detail view with traffic metadata |
-| 🏷️ Severity Classification | High / Medium / Low with glow indicators |
-| 📑 Multi-Page Dashboard | 5 dedicated pages: Dashboard, Alerts, Analytics, MITRE, About |
-| 🔌 FastAPI Backend | REST API + WebSocket server for alert ingestion/distribution |
+|  Hybrid IDS | Signature + Anomaly (Isolation Forest) detection |
+|  PCAP Analysis | Offline packet analysis — Windows compatible |
+|  Live Capture | Real-time sniffing via Scapy — Linux |
+|  Test Mode | Mock packet injection for development |
+|  MITRE ATT&CK | Full tactic/technique mapping with kill chain view |
+|  WebSocket Alerts | Push-based real-time alert delivery |
+|  ECharts Visuals | Interactive charts (severity, timeline, top IPs, attack types) |
+|  Export Reports | Export alerts to **CSV** and **PDF** (jsPDF) |
+|  Alert Details Modal | Expandable per-alert detail view with traffic metadata |
+|  Severity Classification | High / Medium / Low with glow indicators |
+|  Multi-Page Dashboard | 5 dedicated pages: Dashboard, Alerts, Analytics, MITRE, About |
+|  FastAPI Backend | REST API + WebSocket server for alert ingestion/distribution |
 
 ---
 
@@ -93,16 +93,16 @@ The system supports:
 
 > These features were added in the latest version compared to the original project.
 
-### 🖥️ Fully Custom Web Frontend (Replacing Streamlit)
+###  Fully Custom Web Frontend (Replacing Streamlit)
 The old Streamlit dashboard has been **completely replaced** with a custom, multi-page web application built using:
 - **HTML + Tailwind CSS** for a sleek dark-theme SOC-style UI
 - **Vanilla JavaScript** for dynamic, live-updating content
 - **Apache ECharts** for rich, interactive charts
 
-### ⚡ WebSocket Real-Time Alerts
+###  WebSocket Real-Time Alerts
 The FastAPI backend now supports a **WebSocket endpoint** (`/ws/alerts`) that pushes new alerts instantly to all connected dashboard clients — no polling or page refresh required.
 
-### 📑 Multi-Page Dashboard (5 Pages)
+###  Multi-Page Dashboard (5 Pages)
 | Page | Description |
 |---|---|
 | **Dashboard** | Overview with metric cards, MITRE kill chain, charts, incident grouping, and alert table |
@@ -111,21 +111,21 @@ The FastAPI backend now supports a **WebSocket endpoint** (`/ws/alerts`) that pu
 | **MITRE ATT&CK** | Kill chain overview, technique frequency, severity-by-tactic chart, and technique list |
 | **About** | Project info page |
 
-### 📋 Alert Details Modal
+###  Alert Details Modal
 Each alert row in the dashboard opens a **detailed modal** showing:
 - Attack name, severity, type, MITRE technique
 - Source IP / Port, Destination IP / Port
 - Traffic metadata: packet size, rate, byte rate, TCP flags, flow duration
 
-### 📤 Export to CSV and PDF
+###  Export to CSV and PDF
 From the dashboard, you can export the entire alert list as:
 - **CSV** — for spreadsheet/SIEM import
 - **PDF** — generated client-side using **jsPDF**
 
-### 🗺️ MITRE ATT&CK Kill Chain Visualization
+###  MITRE ATT&CK Kill Chain Visualization
 The dashboard now renders a **live kill chain** based on detected alerts, showing which ATT&CK tactics have been triggered. Each tile is clickable and opens a **Tactic Deep Dive** panel with technique descriptions, impact analysis, risk level, and mitigation steps.
 
-### 🔢 Active Incidents Grouping
+###  Active Incidents Grouping
 Alerts on the dashboard are now **grouped by source IP** in an "Active Incidents" section, giving a quick attacker-centric view.
 
 ---
@@ -198,7 +198,7 @@ Custom HTML/JS Frontend (Tailwind + ECharts)
 
 ## 9) Dashboard Capabilities
 
-### 🖥️ Dashboard Page
+###  Dashboard Page
 - Total alerts, high severity count, medium severity count, and last updated time
 - **MITRE ATT&CK Kill Chain** visualization with tactic deep dive
 - **ECharts** visualization:
@@ -209,14 +209,14 @@ Custom HTML/JS Frontend (Tailwind + ECharts)
 - **Detected Alerts** table with per-row detail modal
 - **Export CSV** and **Export PDF** buttons
 
-### 📊 Analytics Page
+###  Analytics Page
 - Severity Distribution chart
 - Attack Types distribution chart
 - Alerts Over Time (temporal view)
 - Top Source IPs
 - **Analytical Insights** — auto-generated text insights based on alert data
 
-### 🗺️ MITRE ATT&CK Page
+###  MITRE ATT&CK Page
 - ATT&CK Kill Chain Overview
 - Technique Frequency chart
 - Severity by Tactic chart
@@ -324,7 +324,7 @@ Or navigate using the sidebar to: Alerts, Analytics, MITRE ATT&CK, About.
 
 ---
 
-### ⚡ Test Mode (Windows — no PCAP file needed)
+###  Test Mode (Windows — no PCAP file needed)
 
 To run IDS with **mock packets** for development/testing, edit `src/main.py` and switch:
 
@@ -493,5 +493,3 @@ By integrating MITRE ATT&CK intelligence, real-time WebSocket alert delivery, EC
 The modular and scalable design makes it suitable for academic projects, cybersecurity demonstrations, CTF competitions, and future research enhancements.
 
 ---
-
-> **Made with Python 🐍 | FastAPI ⚡ | Tailwind CSS 🎨 | ECharts 📊 | MITRE ATT&CK 🗺️**
