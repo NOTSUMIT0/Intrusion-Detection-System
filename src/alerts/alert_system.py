@@ -1,6 +1,15 @@
 import json
 import requests
+from decimal import Decimal
 from datetime import datetime
+
+
+class DecimalEncoder(json.JSONEncoder):
+    """Custom JSON encoder that converts Decimal to float."""
+    def default(self, obj):
+        if isinstance(obj, Decimal):
+            return float(obj)
+        return super().default(obj)
 
 from utils.logger import setup_logger
 from config.settings import LOG_FILE_PATH
@@ -82,7 +91,7 @@ class AlertSystem:
         Logs alert locally with severity-based handling.
         """
         severity = alert.get("severity", "low")
-        alert_json = json.dumps(alert)
+        alert_json = json.dumps(alert, cls=DecimalEncoder)
 
         if severity == "high":
             logger.critical(alert_json)
@@ -99,7 +108,8 @@ class AlertSystem:
         try:
             response = requests.post(
                 self.api_url,
-                json=alert,
+                data=json.dumps(alert, cls=DecimalEncoder),
+                headers={"Content-Type": "application/json"},
                 timeout=2
             )
 
