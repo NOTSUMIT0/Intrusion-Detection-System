@@ -1,39 +1,45 @@
 {
   "syn_flood": {
-    "description": "TCP SYN flood attack detected",
+    "description": "TCP SYN flood attack — high-rate SYN packets indicating volumetric DoS attempt",
     "mitre": "T1499",
     "severity": "high",
     "conditions": {
-      "packet_rate": 100
+      "packet_rate": 1000
     }
   },
-
   "port_scan": {
-    "description": "Possible TCP port scanning activity",
+    "description": "TCP port scanning — rapid sequential connection attempts to multiple ports",
     "mitre": "T1046",
     "severity": "medium",
     "conditions": {
-      "packet_rate": 50,
-      "packet_size": 100
+      "packet_rate": 100,
+      "byte_rate": 5000
     }
   },
-
   "dos_attack": {
-    "description": "High bandwidth denial of service behavior",
+    "description": "High-bandwidth Denial of Service — traffic volume exceeding 10 MB/s per flow",
     "mitre": "T1499",
     "severity": "high",
     "conditions": {
-      "byte_rate": 100000
+      "byte_rate": 10000000
     }
   },
-
   "suspicious_small_packets": {
-    "description": "Suspicious traffic with unusually small packets",
+    "description": "High-rate small packet flooding — indicative of probe scanning or amplification attacks",
     "mitre": "T1046",
     "severity": "low",
     "conditions": {
-      "packet_size": 60,
-      "packet_rate": 30
+      "packet_rate": 200,
+      "byte_rate": 15000
+    }
+  },
+  "data_exfiltration": {
+    "description": "Sustained high byte-rate outbound flow — possible data exfiltration over a single connection",
+    "mitre": "T1048",
+    "severity": "high",
+    "conditions": {
+      "byte_rate": 5000000,
+      "packet_rate": 500
     }
   }
 }
