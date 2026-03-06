@@ -1,4 +1,4 @@
-from scapy.all import rdpcap, IP, TCP
+from scapy.all import rdpcap, IP, TCP  # type: ignore[import-untyped]
 from utils.logger import setup_logger
 
 

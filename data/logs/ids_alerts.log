@@ -4142,3 +4142,8 @@
 2026-02-27 19:09:11,739 | WARNING | DetectionEngine | Signature match detected: port_scan
 2026-02-27 19:09:11,739 | WARNING | DetectionEngine | Signature match detected: suspicious_small_packets
 2026-02-27 19:09:11,740 | CRITICAL | AlertSystem | {"timestamp": "2026-02-27T13:39:11.739824", "alert_type": "signature", "attack_name": "syn_flood", "severity": "high", "mitre_technique": "T1499", "anomaly_score": null, "source": {"ip": "140.82.113.26", "port": 443}, "destination": {"ip": "10.234.183.252", "port": 57030}, "traffic": {"packet_size": 80, "packet_rate": 10000.0, "byte_rate": 800000.0, "tcp_flags": "PA", "flow_duration": null}}
+2026-03-06 12:07:59,436 | INFO | IDS-Main | IDS initialized in LIVE mode
+2026-03-06 12:07:59,436 | INFO | IDS-Main | Running IDS in LIVE mode
+2026-03-06 12:09:10,852 | INFO | IDS-Main | Stopping IDS...
+2026-03-06 12:11:29,089 | INFO | IDS-Main | IDS initialized in LIVE mode
+2026-03-06 12:11:29,089 | INFO | IDS-Main | Running IDS in LIVE mode

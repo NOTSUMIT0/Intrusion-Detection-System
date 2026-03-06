@@ -3,7 +3,7 @@ import time
 import queue
 import os
 
-from scapy.all import IP, TCP
+from scapy.all import IP, TCP  # type: ignore[import-untyped]
 
 from capture.packet_capture import PacketCapture
 from analysis.traffic_analyzer import TrafficAnalyzer
@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 logger = setup_logger(
     name="IDS-Main",
-    log_file="data/logs/ids_alerts.log"
+    log_file=os.path.join(BASE_DIR, "data", "logs", "ids_alerts.log")
 )
 
 
@@ -30,15 +30,16 @@ class IntrusionDetectionSystem:
     def __init__(self, mode="test"):
         """
         mode:
-        - 'test'  -> Windows / mock packets
-        - 'live'  -> Linux live packet capture
+        - 'test'  -> mock packets for development
+        - 'live'  -> live packet capture (Linux + Windows)
+        - 'pcap'  -> offline PCAP file analysis
         """
         self.mode = mode
 
         self.packet_capture = PacketCapture()
         self.traffic_analyzer = TrafficAnalyzer()
         self.detection_engine = DetectionEngine(
-            "data/signatures/signature_rules.json"
+            os.path.join(BASE_DIR, "data", "signatures", "signature_rules.json")
         )
         self.alert_system = AlertSystem()
 
@@ -104,12 +105,13 @@ class IntrusionDetectionSystem:
         logger.info("TEST mode completed")
 
     # -----------------------------
-    # LIVE MODE (LINUX ONLY)
+    # LIVE MODE (LINUX + WINDOWS)
     # -----------------------------
     def run_live_mode(self):
         """
-        Runs IDS with live packet capture
-        (Linux environment)
+        Runs IDS with live packet capture.
+        Works on both Linux and Windows.
+        Windows requires Npcap + Administrator privileges.
         """
         logger.info("Running IDS in LIVE mode")
 
@@ -139,16 +141,17 @@ class IntrusionDetectionSystem:
 if __name__ == "__main__":
     """
     Change mode here:
-    - mode="test"  -> Windows
-    - mode="live"  -> Linux
+    - mode="test"  -> mock packets (any OS)
+    - mode="live"  -> live capture (Linux + Windows)
+    - mode="pcap"  -> offline PCAP file analysis
     """
 
     # FOR PCAP MODE UNCOMMENT BELOW:
-    ids = IntrusionDetectionSystem(mode="pcap")
+    #ids = IntrusionDetectionSystem(mode="pcap")
     #ids.run_pcap_mode("data/pcaps/sample.pcap")
 
-    pcap_path = os.path.join(BASE_DIR, "data", "pcaps", "sample.pcap")
-    ids.run_pcap_mode(pcap_path)
+    #pcap_path = os.path.join(BASE_DIR, "data", "pcaps", "sample.pcap")
+    #ids.run_pcap_mode(pcap_path)
 
 
     #FOR TEST MODE UNCOMMENT BELOW:
@@ -157,5 +160,5 @@ if __name__ == "__main__":
 
 
     #FOR LIVE MODE UNCOMMENT BELOW:
-    # ids = IntrusionDetectionSystem(mode="live")
-    # ids.run_live_mode()
+    ids = IntrusionDetectionSystem(mode="live")
+    ids.run_live_mode()
