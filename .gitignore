@@ -18,7 +18,8 @@ env/
 # Logs
 # ======================
 *.log
-data/logs/
+data/logs/ids_alert.log
+data/logs/ids_alert.log.*
 
 # ======================
 # IDE / Editor
