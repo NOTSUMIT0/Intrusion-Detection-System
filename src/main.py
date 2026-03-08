@@ -123,8 +123,8 @@ class IntrusionDetectionSystem:
 
         try:
             while True:
-                # Check if capture limit reached
-                if self.packet_capture.has_reached_limit():
+                # Check if capture limit reached AND queue is empty
+                if self.packet_capture.has_reached_limit() and self.packet_capture.packet_queue.empty():
                     count = self.packet_capture.packet_count
                     logger.info(
                         f"\n{'='*50}\n"

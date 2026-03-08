@@ -97,7 +97,7 @@ def main():
     # ── 2. Start IDS Engine (packet capture) ───────
     print("  🛡️  Starting IDS Capture Engine...")
     ids_proc = subprocess.Popen(
-        [sys.executable, "main.py"],
+        [sys.executable, "-u", "main.py"],
         cwd=SRC_DIR
     )
     processes.append(ids_proc)

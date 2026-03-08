@@ -4172,3 +4172,30 @@
   Capture stopped automatically.
   Analyze results on the IDS Dashboard.
 ==================================================
+2026-03-08 13:45:25,995 | INFO | IDS-Main | IDS initialized in LIVE mode
+2026-03-08 13:45:25,995 | INFO | IDS-Main | Running IDS in LIVE mode
+2026-03-08 13:45:25,995 | INFO | IDS-Main | Capture limit: 10000 packets
+2026-03-08 13:45:35,947 | INFO | IDS-Main | 
+==================================================
+  CAPTURE COMPLETE: 10000 packets captured
+  Capture stopped automatically.
+  Analyze results on the IDS Dashboard.
+==================================================
+2026-03-08 13:56:48,737 | INFO | IDS-Main | IDS initialized in LIVE mode
+2026-03-08 13:56:48,737 | INFO | IDS-Main | Running IDS in LIVE mode
+2026-03-08 13:56:48,737 | INFO | IDS-Main | Capture limit: 10000 packets
+2026-03-08 13:57:05,943 | INFO | IDS-Main | 
+==================================================
+  CAPTURE COMPLETE: 10000 packets captured
+  Capture stopped automatically.
+  Analyze results on the IDS Dashboard.
+==================================================
+2026-03-08 14:51:42,906 | INFO | IDS-Main | IDS initialized in LIVE mode
+2026-03-08 14:51:42,906 | INFO | IDS-Main | Running IDS in LIVE mode
+2026-03-08 14:51:42,907 | INFO | IDS-Main | Capture limit: 10000 packets
+2026-03-08 15:10:31,415 | INFO | IDS-Main | 
+==================================================
+  CAPTURE COMPLETE: 10000 packets captured
+  Capture stopped automatically.
+  Analyze results on the IDS Dashboard.
+==================================================
