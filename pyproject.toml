@@ -1,0 +1,15 @@
+[project]
+name = "ids-console"
+version = "1.0.0"
+description = "Intrusion Detection System - Real-time threat monitoring & security intelligence"
+requires-python = ">=3.10"
+dependencies = [
+    "scapy",
+    "scikit-learn",
+    "numpy",
+    "fastapi",
+    "uvicorn",
+    "python-dotenv",
+    "requests",
+    "pydantic",
+]
