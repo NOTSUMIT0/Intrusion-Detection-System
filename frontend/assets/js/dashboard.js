@@ -122,7 +122,7 @@ async function loadAlerts() {
     const alerts = data.alerts || [];
 
     alerts.forEach(a => {
-    if (!a.status) a.status = "new";
+      if (!a.status) a.status = "new";
     });
 
     CURRENT_ALERTS = alerts;
@@ -143,7 +143,7 @@ async function loadAlerts() {
     console.error("Failed to fetch alerts", err);
   }
   window.currentAlerts = alerts;
-  
+
 
   renderIncidents(alerts); // Update incidents on load (this is added by TAB)
 }
@@ -187,30 +187,79 @@ function updateSeverityChart(alerts) {
 
 /* ---------- Alerts Timeline ---------- */
 function updateTimelineChart(alerts) {
-  const map = {};
+  // Sort alerts chronologically
+  const sorted = [...alerts].sort(
+    (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
+  );
 
-  alerts.forEach(a => {
-    const t = new Date(a.timestamp).toLocaleTimeString();
-    map[t] = (map[t] || 0) + 1;
+  // Group by minute (HH:MM) for a cleaner aggregated view
+  const ordered = [];
+  const countMap = {};
+
+  sorted.forEach(a => {
+    const d = new Date(a.timestamp);
+    const label = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    if (!countMap[label]) {
+      countMap[label] = 0;
+      ordered.push(label);
+    }
+    countMap[label]++;
   });
+
+  // Show at most the last 10 time buckets to keep chart readable
+  const sliced = ordered.slice(-10);
 
   timelineChart.setOption({
     backgroundColor: "transparent",
+    tooltip: {
+      trigger: "axis",
+      backgroundColor: "#1e293b",
+      borderColor: "#334155",
+      textStyle: { color: "#e2e8f0" },
+      formatter: params => {
+        const p = params[0];
+        return `<b>${p.name}</b><br/>Alerts: <b>${p.value}</b>`;
+      }
+    },
+    grid: {
+      left: 40, right: 20, top: 20, bottom: 50
+    },
     xAxis: {
       type: "category",
-      data: Object.keys(map),
-      axisLabel: { color: "#9ca3af" }
+      data: sliced,
+      axisLabel: {
+        color: "#9ca3af",
+        fontSize: 12
+      },
+      axisLine: { lineStyle: { color: "#374151" } }
     },
     yAxis: {
       type: "value",
-      axisLabel: { color: "#9ca3af" }
+      minInterval: 1,
+      axisLabel: { color: "#9ca3af" },
+      splitLine: { lineStyle: { color: "#1f2937" } }
     },
     series: [{
-      data: Object.values(map),
+      data: sliced.map(k => countMap[k]),
+      type: "bar",
+      barWidth: "40%",
+      itemStyle: {
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          { offset: 0, color: "#38bdf8" },
+          { offset: 1, color: "rgba(56,189,248,0.15)" }
+        ]),
+        borderRadius: [4, 4, 0, 0]
+      }
+    },
+    {
+      data: sliced.map(k => countMap[k]),
       type: "line",
       smooth: true,
-      lineStyle: { color: "#38bdf8" },
-      areaStyle: { color: "rgba(56,189,248,0.2)" }
+      symbol: "circle",
+      symbolSize: 6,
+      lineStyle: { color: "#38bdf8", width: 2 },
+      itemStyle: { color: "#38bdf8" }
     }]
   });
 }
@@ -224,23 +273,46 @@ function updateSourceChart(alerts) {
     srcMap[ip] = (srcMap[ip] || 0) + 1;
   });
 
-  const entries = Object.entries(srcMap).slice(0, 5);
+  // Sort by count descending, take top 5
+  const entries = Object.entries(srcMap)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .reverse();  // Reverse so highest is at top of horizontal bar chart
 
   sourceChart.setOption({
     backgroundColor: "transparent",
+    tooltip: {
+      trigger: "axis",
+      backgroundColor: "#1e293b",
+      borderColor: "#334155",
+      textStyle: { color: "#e2e8f0" }
+    },
+    grid: {
+      left: 140,
+      right: 20,
+      top: 10,
+      bottom: 30
+    },
     xAxis: {
       type: "value",
-      axisLabel: { color: "#9ca3af" }
+      minInterval: 1,
+      axisLabel: { color: "#9ca3af" },
+      splitLine: { lineStyle: { color: "#1f2937" } }
     },
     yAxis: {
       type: "category",
       data: entries.map(e => e[0]),
-      axisLabel: { color: "#9ca3af" }
+      axisLabel: {
+        color: "#9ca3af",
+        fontSize: 12,
+        width: 130,
+        overflow: "none"
+      }
     },
     series: [{
       type: "bar",
       data: entries.map(e => e[1]),
-      itemStyle: { color: "#38bdf8" }
+      itemStyle: { color: "#38bdf8", borderRadius: [0, 4, 4, 0] }
     }]
   });
 }
@@ -342,16 +414,12 @@ function renderAlertsTable(alerts) {
 
   alerts.slice().reverse().forEach(alert => {
     const severity = alert.severity || "low";
-    const glow =
-      severity === "high" ? "glow-high" :
-      severity === "medium" ? "glow-medium" :
-      "glow-low";
 
     const row = document.createElement("div");
     row.className = `
       bg-[#111827] border border-gray-800 rounded-lg
       p-4 cursor-pointer transition-all duration-300
-      hover:bg-[#1f2937] ${glow}
+      hover:bg-[#1f2937]
     `;
 
     row.innerHTML = `
@@ -365,21 +433,21 @@ function renderAlertsTable(alerts) {
         <div class="flex gap-2 items-center">
           <span class="px-3 py-1 rounded-full text-xs font-semibold
             ${severity === "high" ? "bg-red-500/20 text-red-400" :
-              severity === "medium" ? "bg-yellow-500/20 text-yellow-400" :
-              "bg-green-500/20 text-green-400"}">
+        severity === "medium" ? "bg-yellow-500/20 text-yellow-400" :
+          "bg-green-500/20 text-green-400"}">
             ${severity.toUpperCase()}
           </span>
 
           <span class="px-2 py-1 rounded text-xs font-semibold
             ${alert.status === "new" ? "bg-blue-500/20 text-blue-400" :
-              alert.status === "investigating" ? "bg-purple-500/20 text-purple-400" :
-              "bg-green-500/20 text-green-400"}">
+        alert.status === "investigating" ? "bg-purple-500/20 text-purple-400" :
+          "bg-green-500/20 text-green-400"}">
             ${alert.status.toUpperCase()}
           </span>
         </div>
       </div>
     `;
-    
+
     row.addEventListener("click", () => {
       openModal(alert);
     });
@@ -407,15 +475,11 @@ function renderIncidents(alerts) {
 
   incidents.forEach(incident => {
     const sev = incident.highest_severity;
-    const glow =
-      sev === "high" ? "glow-high" :
-      sev === "medium" ? "glow-medium" :
-      "glow-low";
 
     const card = document.createElement("div");
     card.className = `
       bg-[#111827] border border-gray-800 rounded-lg p-4
-      transition hover:bg-[#1f2937] ${glow}
+      transition hover:bg-[#1f2937]
     `;
 
     card.innerHTML = `
@@ -431,8 +495,8 @@ function renderIncidents(alerts) {
 
         <span class="px-3 py-1 rounded-full text-xs font-semibold
           ${sev === "high" ? "bg-red-500/20 text-red-400" :
-            sev === "medium" ? "bg-yellow-500/20 text-yellow-400" :
-            "bg-green-500/20 text-green-400"}">
+        sev === "medium" ? "bg-yellow-500/20 text-yellow-400" :
+          "bg-green-500/20 text-green-400"}">
           ${sev.toUpperCase()}
         </span>
       </div>
@@ -463,12 +527,12 @@ function openModal(alert) {
 
   const severityColor =
     alert.severity === "high" ? "text-red-400" :
-    alert.severity === "medium" ? "text-yellow-400" :
-    "text-green-400";
+      alert.severity === "medium" ? "text-yellow-400" :
+        "text-green-400";
 
   const mitre = MITRE_DB[alert.mitre_technique];
 
-    content.innerHTML = `
+  content.innerHTML = `
       <div class="space-y-5">
 
         <!-- BASIC ALERT INFO -->
@@ -504,9 +568,8 @@ function openModal(alert) {
             MITRE ATT&CK Intelligence
           </p>
 
-          ${
-            mitre
-              ? `
+          ${mitre
+      ? `
             <p class="text-sm">
               <span class="text-gray-400">Technique:</span>
               <span class="font-mono">${alert.mitre_technique}</span> —
@@ -540,12 +603,12 @@ function openModal(alert) {
               </ul>
             </div>
             `
-              : `
+      : `
             <p class="text-sm text-gray-400">
               No MITRE intelligence available for this alert.
             </p>
             `
-          }
+    }
         </div>
 
                     <!-- PACKET & TRAFFIC DETAILS -->
@@ -554,9 +617,8 @@ function openModal(alert) {
               Packet & Traffic Analysis
             </p>
 
-            ${
-              alert.traffic
-                ? `
+            ${alert.traffic
+      ? `
               <div class="grid grid-cols-2 gap-4 text-sm">
 
                 <div>
@@ -596,12 +658,12 @@ function openModal(alert) {
                 that triggered the IDS detection logic.
               </div>
               `
-                : `
+      : `
               <p class="text-sm text-gray-400">
                 Packet-level details are not available for this alert.
               </p>
               `
-            }
+    }
           </div>
 
 
@@ -630,7 +692,7 @@ function openModal(alert) {
       </div>
     `;
 
-  
+
   // Render MITRE attack chain
   if (alert.mitre_technique) {
     renderAttackChain(alert.mitre_technique);
@@ -847,9 +909,19 @@ function closeModal() {
 }
 
 /* ---------- Set Alert Status ---------- */
-function setAlertStatus(timestamp, status) {
-  const alerts = window.currentAlerts || [];
+async function setAlertStatus(timestamp, status) {
+  try {
+    await fetch(`http://127.0.0.1:8000/alerts/${encodeURIComponent(timestamp)}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status })
+    });
+  } catch (err) {
+    console.error('Failed to update alert status', err);
+  }
 
+  // Update local state
+  const alerts = window.currentAlerts || [];
   alerts.forEach(a => {
     if (a.timestamp === timestamp) {
       a.status = status;
@@ -903,4 +975,3 @@ document.getElementById("alertModal").addEventListener("click", (e) => {
 
 
 loadAlerts();
-renderIncidents(alerts);

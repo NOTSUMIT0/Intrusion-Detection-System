@@ -4,7 +4,7 @@ import queue
 import platform
 from typing import Optional
 
-from config.settings import PACKET_QUEUE_SIZE, check_capture_backend
+from config.settings import PACKET_QUEUE_SIZE, MAX_CAPTURE_PACKETS, check_capture_backend
 from utils.logger import setup_logger
 
 
@@ -29,15 +29,43 @@ class PacketCapture:
         self.packet_queue: queue.Queue = queue.Queue(maxsize=PACKET_QUEUE_SIZE)
         self.stop_event = threading.Event()
         self.capture_thread: Optional[threading.Thread] = None
+        self._packet_count = 0
+        self._max_packets = MAX_CAPTURE_PACKETS
+
+    @property
+    def packet_count(self) -> int:
+        return self._packet_count
+
+    def has_reached_limit(self) -> bool:
+        return self._packet_count >= self._max_packets
 
     def _packet_callback(self, packet):
         """
         Called by Scapy for every captured packet.
         Filters and enqueues valid packets.
+        Auto-stops capture when MAX_CAPTURE_PACKETS is reached.
         """
+        if self.has_reached_limit():
+            self.stop_event.set()
+            return
+
         try:
             if IP in packet and TCP in packet:
+                self._packet_count += 1
                 self.packet_queue.put_nowait(packet)
+
+                if self._packet_count % 1000 == 0:
+                    logger.info(
+                        f"Captured {self._packet_count}/{self._max_packets} packets"
+                    )
+
+                if self.has_reached_limit():
+                    logger.info(
+                        f"Capture limit reached ({self._max_packets} packets). "
+                        "Stopping capture automatically."
+                    )
+                    self.stop_event.set()
+
         except queue.Full:
             logger.warning("Packet queue full. Dropping packet.")
 

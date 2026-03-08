@@ -112,13 +112,37 @@ class IntrusionDetectionSystem:
         Runs IDS with live packet capture.
         Works on both Linux and Windows.
         Windows requires Npcap + Administrator privileges.
+        Auto-stops after MAX_CAPTURE_PACKETS (10,000) packets.
         """
         logger.info("Running IDS in LIVE mode")
+        logger.info(
+            f"Capture limit: {self.packet_capture._max_packets} packets"
+        )
 
         self.packet_capture.start(NETWORK_INTERFACE)
 
         try:
             while True:
+                # Check if capture limit reached
+                if self.packet_capture.has_reached_limit():
+                    count = self.packet_capture.packet_count
+                    logger.info(
+                        f"\n{'='*50}\n"
+                        f"  CAPTURE COMPLETE: {count} packets captured\n"
+                        f"  Capture stopped automatically.\n"
+                        f"  Analyze results on the IDS Dashboard.\n"
+                        f"{'='*50}"
+                    )
+                    print(
+                        f"\n{'='*50}\n"
+                        f"  CAPTURE COMPLETE: {count} packets captured\n"
+                        f"  Capture stopped automatically.\n"
+                        f"  Open the IDS Dashboard to analyze results.\n"
+                        f"{'='*50}\n"
+                    )
+                    self.packet_capture.stop()
+                    break
+
                 try:
                     packet = self.packet_capture.packet_queue.get(timeout=1)
                     features = self.traffic_analyzer.analyze(packet)

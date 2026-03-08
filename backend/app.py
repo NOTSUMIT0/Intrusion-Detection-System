@@ -1,5 +1,6 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from typing import List
 
 app = FastAPI(
@@ -22,6 +23,11 @@ ALERT_STORE: List[dict] = []
 active_connections: List[WebSocket] = []
 
 
+# ---------------- MODELS ----------------
+class StatusUpdate(BaseModel):
+    status: str   # "investigating" | "resolved"
+
+
 # ---------------- REST API ----------------
 @app.get("/")
 def root():
@@ -36,6 +42,7 @@ def get_alerts():
 
 @app.post("/alerts")
 async def add_alert(alert: dict):
+    alert.setdefault("status", "new")
     ALERT_STORE.append(alert)
 
     # PUSH ALERT TO WEBSOCKETS---------------
@@ -43,6 +50,31 @@ async def add_alert(alert: dict):
         await ws.send_json(alert)
 
     return {"message": "Alert received"}
+
+
+# ---------------- STATUS MANAGEMENT ----------------
+@app.patch("/alerts/{timestamp}/status")
+def update_alert_status(timestamp: str, body: StatusUpdate):
+    """Update the lifecycle status of an alert identified by its timestamp."""
+    for alert in ALERT_STORE:
+        if alert.get("timestamp") == timestamp:
+            alert["status"] = body.status
+            return {"message": "Status updated", "alert": alert}
+    return {"message": "Alert not found"}
+
+
+@app.get("/alerts/investigating")
+def get_investigating_alerts():
+    """Return all alerts currently under investigation."""
+    investigating = [a for a in ALERT_STORE if a.get("status") == "investigating"]
+    return {"count": len(investigating), "alerts": investigating}
+
+
+@app.get("/alerts/resolved")
+def get_resolved_alerts():
+    """Return all resolved alerts."""
+    resolved = [a for a in ALERT_STORE if a.get("status") == "resolved"]
+    return {"count": len(resolved), "alerts": resolved}
 
 
 # ---------------- WEBSOCKET ----------------
