@@ -83,9 +83,13 @@ The system supports:
 |  ECharts Visuals | Interactive charts (severity, timeline, top IPs, attack types) |
 |  Export Reports | Export alerts to **CSV** and **PDF** (jsPDF) |
 |  Alert Details Modal | Expandable per-alert detail view with traffic metadata |
-|  Severity Classification | High / Medium / Low with glow indicators |
-|  Multi-Page Dashboard | 5 dedicated pages: Dashboard, Alerts, Analytics, MITRE, About |
+|  Severity Classification | High / Medium / Low severity badges |
+|  Investigation Center | Dedicated page with ECharts analytics, toggle between investigating/resolved alerts |
+|  Alert Lifecycle | Full new → investigating → resolved workflow with backend persistence |
+|  Packet Capture Limit | Auto-stops capture at 10,000 packets for focused analysis |
+|  Multi-Page Dashboard | 6 dedicated pages: Dashboard, Alerts, Investigations, Analytics, MITRE, About |
 |  FastAPI Backend | REST API + WebSocket server for alert ingestion/distribution |
+|  One-Command Launch | `uv run python run.py` starts backend, capture engine, and opens dashboard |
 
 ---
 
@@ -102,11 +106,12 @@ The old Streamlit dashboard has been **completely replaced** with a custom, mult
 ###  WebSocket Real-Time Alerts
 The FastAPI backend now supports a **WebSocket endpoint** (`/ws/alerts`) that pushes new alerts instantly to all connected dashboard clients — no polling or page refresh required.
 
-###  Multi-Page Dashboard (5 Pages)
+###  Multi-Page Dashboard (6 Pages)
 | Page | Description |
 |---|---|
 | **Dashboard** | Overview with metric cards, MITRE kill chain, charts, incident grouping, and alert table |
 | **Alerts** | Dedicated filterable alert feed |
+| **Investigations** | Toggle between investigating/resolved alerts, ECharts pipeline donut and severity breakdown, packet detail cards with action buttons |
 | **Analytics** | Deep-dive charts: severity distribution, attack types, alert timeline, top source IPs, and analytical insights |
 | **MITRE ATT&CK** | Kill chain overview, technique frequency, severity-by-tactic chart, and technique list |
 | **About** | Project info page |
@@ -127,6 +132,23 @@ The dashboard now renders a **live kill chain** based on detected alerts, showin
 
 ###  Active Incidents Grouping
 Alerts on the dashboard are now **grouped by source IP** in an "Active Incidents" section, giving a quick attacker-centric view.
+
+###  Investigation Center & Alert Lifecycle
+A new **Investigations** page provides a complete alert lifecycle workflow:
+- **Mark Investigating** on any alert from the Dashboard modal
+- View all investigating alerts on the Investigations page with full packet details
+- **Mark Resolved** to move alerts to the resolved tab
+- ECharts visualizations: pipeline donut (new / investigating / resolved) and severity breakdown bar chart
+- Toggle between "Under Investigation" and "Resolved" tabs
+
+###  Packet Capture Limit
+Live capture now auto-stops after **10,000 packets** to prevent runaway capture sessions. Progress is logged every 1,000 packets. After reaching the limit, the terminal displays a clear banner prompting the user to analyze results on the dashboard.
+
+###  One-Command Launcher
+A unified `run.py` launcher starts the FastAPI backend, IDS capture engine, and opens the dashboard in the browser — all with one command:
+```bash
+uv run python run.py
+```
 
 ---
 
@@ -150,13 +172,17 @@ Alert System
    |── HTTP POST to FastAPI backend
    |
 FastAPI Backend (REST + WebSocket)
-   |── GET  /alerts      → fetch all alerts
-   |── POST /alerts      → receive new alert
-   |── WS   /ws/alerts   → push to connected clients
+   |── GET   /alerts                    → fetch all alerts
+   |── POST  /alerts                    → receive new alert
+   |── PATCH /alerts/{timestamp}/status  → update alert lifecycle status
+   |── GET   /alerts/investigating       → fetch investigating alerts
+   |── GET   /alerts/resolved            → fetch resolved alerts
+   |── WS    /ws/alerts                  → push to connected clients
    |
 Custom HTML/JS Frontend (Tailwind + ECharts)
    |── Dashboard page
    |── Alerts page
+   |── Investigations page
    |── Analytics page
    |── MITRE ATT&CK page
    |── About page
@@ -229,7 +255,8 @@ Custom HTML/JS Frontend (Tailwind + ECharts)
 **Backend**
 | Tool | Purpose |
 |---|---|
-| Python 3.9+ | Core language |
+| Python 3.10+ | Core language |
+| uv | Fast Python package manager & project runner |
 | Scapy | Packet capture and parsing |
 | FastAPI | REST API + WebSocket server |
 | Uvicorn | ASGI server for FastAPI |
@@ -260,18 +287,26 @@ Custom HTML/JS Frontend (Tailwind + ECharts)
 
 ### Prerequisites
 
-- Python 3.9+
-- pip
-- Node.js + npm (for Tailwind CSS build)
-- Wireshark + Npcap (for Windows PCAP mode)
+- Python 3.10+
+- [uv](https://docs.astral.sh/uv/) — fast Python package manager
+- Node.js + npm (for Tailwind CSS build, one-time only)
+- Npcap (for Windows live capture) or Wireshark (for PCAP mode)
 
-### Step 1 — Install Python dependencies
+### Step 1 — Install uv (if not already installed)
 
 ```bash
-pip install -r requirements.txt
+pip install uv
 ```
 
-### Step 2 — Build Tailwind CSS (frontend styles)
+### Step 2 — Install all dependencies
+
+```bash
+uv sync
+```
+
+> This reads `pyproject.toml`, creates a virtual environment, and installs all packages automatically.
+
+### Step 3 — Build Tailwind CSS (one-time, for frontend styles)
 
 ```bash
 cd frontend
@@ -283,44 +318,58 @@ npm run build
 
 ---
 
-## 12) Running on Windows (PCAP-Based Analysis)
+## 12) Running the IDS (One Command)
 
-### 1. Capture traffic using Wireshark
-
-Save the capture file as:
-
-```
-data/pcaps/sample.pcap
-```
-
-### 2. Start the FastAPI backend
+The easiest way to run everything is the **unified launcher**:
 
 ```bash
-uvicorn backend.app:app --reload
+uv run python run.py
 ```
 
-The API will be available at: `http://127.0.0.1:8000`
+This single command will:
+1. Free port 8000 if occupied
+2. Start the **FastAPI backend** (`http://127.0.0.1:8000`)
+3. Start the **IDS Capture Engine** (live packet capture)
+4. Open the **Dashboard** in your default browser
 
-### 3. Run the IDS in PCAP mode
+Capture automatically stops at **10,000 packets**. The backend stays alive so you can analyze results on the dashboard.
 
-Open a new terminal, then run from the project root (`e:\Project Programs\IDS`):
+Press **Ctrl+C** to shut down all services.
 
+---
+
+### Alternative: Running Components Manually
+
+#### Start the backend only:
+```bash
+uv run uvicorn backend.app:app --reload
+```
+
+#### Start the IDS engine only (from the `src/` directory):
 ```bash
 cd src
-python main.py
+uv run python main.py
 ```
 
-> By default, `main.py` runs in **PCAP mode** reading `data/pcaps/sample.pcap`.
+#### Open the dashboard:
+Open `frontend/pages/dashboard.html` in your browser.
+Navigate using the sidebar: Dashboard → Alerts → Investigations → Analytics → MITRE → About.
 
-### 4. Open the Dashboard in your browser
+---
 
-Open this file directly in your browser:
+### PCAP Mode (Offline Analysis — Windows Friendly)
 
+1. Capture traffic using Wireshark and save as `data/pcaps/sample.pcap`
+2. Edit `src/main.py` and uncomment the PCAP mode block
+3. Run:
+```bash
+uv run python run.py
 ```
-frontend/pages/dashboard.html
+Or manually:
+```bash
+uv run uvicorn backend.app:app --reload   # Terminal 1
+cd src && uv run python main.py            # Terminal 2
 ```
-
-Or navigate using the sidebar to: Alerts, Analytics, MITRE ATT&CK, About.
 
 ---
 
@@ -353,38 +402,30 @@ python main.py
 
 ```bash
 sudo apt install tcpdump
+pip install uv
+uv sync
 ```
 
-### 2. Start the FastAPI backend
+### 2. Run with the unified launcher (recommended)
 
 ```bash
-uvicorn backend.app:app --reload
+sudo uv run python run.py
 ```
 
-### 3. Run the IDS in Live mode (requires root)
+> Root is required for live packet capture on Linux.
 
-Edit `src/main.py` to enable live mode:
+### 3. Or run manually
+
+```bash
+uv run uvicorn backend.app:app --reload        # Terminal 1
+cd src && sudo uv run python main.py            # Terminal 2
+```
+
+Make sure `src/main.py` has live mode enabled:
 
 ```python
 ids = IntrusionDetectionSystem(mode="live")
 ids.run_live_mode()
-```
-
-Then run:
-
-```bash
-cd src
-sudo python main.py
-```
-
-> The IDS will now analyze live network traffic in real time.
-
-### 4. Open the Dashboard
-
-Open your browser and navigate to:
-
-```
-frontend/pages/dashboard.html
 ```
 
 > The dashboard connects to the FastAPI WebSocket at `ws://127.0.0.1:8000/ws/alerts` for real-time updates.
@@ -396,9 +437,12 @@ frontend/pages/dashboard.html
 ```
 IDS/
 │
+├── run.py                      # Unified launcher — starts everything
+├── pyproject.toml              # uv project config & dependencies
+│
 ├── backend/
 │   ├── __init__.py
-│   └── app.py                  # FastAPI app — REST + WebSocket server
+│   └── app.py                  # FastAPI app — REST + WebSocket + status mgmt
 │
 ├── frontend/
 │   ├── assets/
@@ -407,11 +451,13 @@ IDS/
 │   │   └── js/
 │   │       ├── dashboard.js    # Dashboard page logic
 │   │       ├── alerts.js       # Alerts page logic
+│   │       ├── investigations.js # Investigation Center logic
 │   │       ├── analytics.js    # Analytics page logic
 │   │       └── mitre.js        # MITRE ATT&CK page logic
 │   ├── pages/
 │   │   ├── dashboard.html      # Main dashboard page
 │   │   ├── alerts.html         # Alerts feed page
+│   │   ├── investigations.html # Investigation Center page
 │   │   ├── analytics.html      # Analytics charts page
 │   │   ├── mitre.html          # MITRE ATT&CK intelligence page
 │   │   └── about.html          # About page
@@ -432,17 +478,17 @@ IDS/
 │   ├── analysis/
 │   │   └── traffic_analyzer.py # Feature extraction
 │   ├── capture/
-│   │   ├── packet_capture.py   # Live capture (Linux)
+│   │   ├── packet_capture.py   # Live capture with 10K packet limit
 │   │   └── pcap_reader.py      # PCAP file reader (Windows)
 │   ├── config/
-│   │   └── settings.py
+│   │   └── settings.py         # Global config (thresholds, limits)
 │   ├── detection/
 │   │   └── detection_engine.py # Signature + anomaly detection
 │   ├── utils/
 │   │   └── logger.py
 │   └── main.py                 # IDS entry point
 │
-├── requirements.txt
+├── requirements.txt            # Legacy pip requirements
 └── README.md
 ```
 
@@ -451,13 +497,15 @@ IDS/
 ## 15) Benefits of the System
 
 1. **Real-time alerts via WebSocket** — no polling, instant updates
-2. **Platform-independent design** — runs on Windows (PCAP) and Linux (live)
-3. **Real-world traffic analysis** using actual network packets
-4. **Educational and practical security insights** through MITRE ATT&CK mapping
-5. **SIEM-like multi-page visualization** with 5 dedicated dashboard sections
-6. **Exportable reports** — CSV and PDF for documentation and compliance
-7. **Scalable and modular architecture** — easy to extend with new detection rules
-8. **Suitable for academic projects, CTFs, and real-world demonstrations**
+2. **Platform-independent design** — runs on Windows (PCAP + live) and Linux (live)
+3. **One-command launch** — `uv run python run.py` starts everything
+4. **Real-world traffic analysis** using actual network packets
+5. **Full alert lifecycle** — new → investigating → resolved with persistence
+6. **Educational and practical security insights** through MITRE ATT&CK mapping
+7. **SIEM-like multi-page visualization** with 6 dedicated dashboard sections
+8. **Exportable reports** — CSV and PDF for documentation and compliance
+9. **Scalable and modular architecture** — easy to extend with new detection rules
+10. **Suitable for academic projects, CTFs, and real-world demonstrations**
 
 ---
 
